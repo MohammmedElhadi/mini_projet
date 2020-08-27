@@ -25,7 +25,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-
+@yield('css')
 
 
 
@@ -46,7 +46,7 @@
             <li class="nav-item">
               <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
-
+            
           </ul>
       
 
@@ -90,13 +90,41 @@
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview">
-                  <a href="#" class="nav-link">
+                  <a href=" {{ route('home')}} " class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                       {{ __('Dashboard') }}
                     </p>
                   </a>
                 </li>
+                <li class="nav-item has-treeview">
+                <a href="{{ route('service.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                    <p>
+                      {{__('Service')}} 
+                     
+                    </p>
+                  </a>
+                </li>
+
+                <li class="nav-item has-treeview">
+                  <a href="{{ route('users.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-chart-pie"></i>
+                      <p>
+                        {{__('Utilisateurs')}} 
+                       
+                      </p>
+                    </a>
+                  </li>
+
+
+
+
+
+
+
+
+
 
                 <li class="nav-item has-treeview">
                   <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
@@ -112,7 +140,7 @@
                   
                 </li>
 
-
+                
               </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -141,16 +169,16 @@
     </div>
 
 
+  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- AdminLTE App -->
 
+  <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{ asset('dist/js/demo.js') }}"></script>
 
-
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist/js/demo.js') }}"></script>
+  
 
 </body>
 </html>
