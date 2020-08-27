@@ -25,3 +25,10 @@ Route::resource('service', 'ServiceController');
     
 Route::resource('users', 'UserController');
 
+Route::resource('courrier', 'CourrierController');
+
+Route::resource('typecourrier', 'TypecourrierController');
+
+Route::resource('mention', 'MentionController');
+
+Route::resource('classement', 'ClassementController');

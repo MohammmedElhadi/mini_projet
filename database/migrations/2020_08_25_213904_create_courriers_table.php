@@ -21,6 +21,8 @@ class CreateCourriersTable extends Migration
             $table->timestamp('date_arrive')->nullable();
             $table->integer('num_depart');
             $table->integer('num_arrive');
+            $table->integer('classement_id');
+
             $table->timestamps();
         });
     }

@@ -48,7 +48,7 @@
             </li>
             
           </ul>
-      
+     
 
       
           <!-- Right navbar links -->
@@ -67,7 +67,9 @@
           </div>
         </nav>
         <!-- /.navbar -->
-      
+        @if(session()->has('success'))
+          <div class="alert alert-success text-center">{{session()->get('success')}} </div>
+        @endif 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
@@ -97,6 +99,53 @@
                     </p>
                   </a>
                 </li>
+
+
+
+
+
+                <li class="nav-item has-treeview">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-table"></i>
+                    <p>
+                      {{__('Courrier')}}
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('courrier.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle"></i>
+                        <p>{{__('List des courriers')}}</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ route('typecourrier.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle"></i>
+                        <p>{{__('Types')}}</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ route('mention.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle"></i>
+                        <p>{{__('Montions')}}</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ route('classement.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle"></i>
+                        <p>{{__('Classements')}}</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+
+
+
+
+
+
                 <li class="nav-item has-treeview">
                 <a href="{{ route('service.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-chart-pie"></i>
