@@ -14,9 +14,9 @@
           <div class="col-12"> 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">{{ __('Services') }}</h3>
+                <h3 class="card-title">{{ __('types') }}</h3>
                 <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#modal-new"  >
-                    {{ __('Nouveau service') }}
+                    {{ __('Nouveau type') }}
                   </button>
 
               </div>
@@ -82,66 +82,56 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">{{__('Ajouter un service')}}</h4>
+              <h4 class="modal-title">{{__('Ajouter un type')}}</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-            <form action="{{route('service.store')}}" method="post">
+            <form action="{{route('type.store')}}" method="post">
                 <div class="form-group">
-                  <label for="nom_service">Nom du service</label>
-                  <input type="text" name="nom_service" id="nom_service" class="form-control" placeholder="nom du service"  
+                  <label for="nom_type">Nom du type</label>
+                  <input type="text" name="nom_type" id="nom_type" class="form-control" placeholder="nom du type"  
                                     class="text-muted">
                 </div>
-                <div class="form-group">
-                  <label for="abr">Abreviation</label>
-                  <input type="text" name="abr_service" id="abr" class="form-control" placeholder="Abreviation">
-                </div>
-                <div class="form-group">
-                    <label>Type de service</label>
-                    <select class="form-control select2" style="width: 100%;">
-                      @foreach ($types as $type)
-                          <option value="{{$type->id}}">{{$type->name}}</option>
-                      @endforeach
-                     
-                    </select>
-                  </div>
+           
                 
-            </form>
+           
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">Save changes</button>
             </div>
+        </form>
+    </div>
           </div>
           <!-- /.modal-content -->
-        </div>
+        
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-  </div>
+  
 
 
   <div class="modal fade" id="modal-edit">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">{{__('Editer un service')}}</h4>
+          <h4 class="modal-title">{{__('Editer un type')}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-        <form action="{{route('service.store')}}" method="post">
+        <form action="{{route('type.store')}}" method="post">
             <div class="form-group">
-              <label for="nom_service">Nom du service</label>
-              <input type="text" name="nom_service" id="nom_service" class="form-control" placeholder="nom du service"  
+              <label for="nom_type">Nom du type</label>
+              <input type="text" name="nom_type" id="nom_type" class="form-control" placeholder="nom du type"  
                                 class="text-muted">
             </div>
             <div class="form-group">
               <label for="abr">Abreviation</label>
-              <input type="text" name="abr_service" id="abr" class="form-control" placeholder="Abreviation">
+              <input type="text" name="abr_type" id="abr" class="form-control" placeholder="Abreviation">
             </div>
             <div class="form-group">
                 <label>Minimal</label>
@@ -179,13 +169,13 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">{{__('Supprimer un service')}}</h4>
+          <h4 class="modal-title">{{__('Supprimer un type')}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-                <p>{{__('Etes-vous sûr que vous voulez supprimer ce service ? ')}}</p>
+                <p>{{__('Etes-vous sûr que vous voulez supprimer ce type ? ')}}</p>
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default " data-dismiss="modal">No</button>

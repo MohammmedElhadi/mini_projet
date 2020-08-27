@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Typeservice;
 
-class ServiceController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('service.index')->with('types',Typeservice::all());
+        return view('typeservice.index');
     }
 
     /**

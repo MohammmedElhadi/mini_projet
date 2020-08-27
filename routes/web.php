@@ -24,4 +24,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('service', 'ServiceController');
     
 Route::resource('users', 'UserController');
+Route::resource('type', 'TypeController');
 
