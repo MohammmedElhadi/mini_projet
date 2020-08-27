@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mention;
 
 class MentionController extends Controller
 {
@@ -13,8 +14,7 @@ class MentionController extends Controller
      */
     public function index()
     {
-        return view('courrier.mention.index');
-
+        return view('courrier.mention.index')->with('mentions',Mention::All());
     }
 
     /**
