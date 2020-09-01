@@ -1,21 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-<<<<<<< HEAD
-
-=======
-use App\Classement;
-use App\Mention;
-use App\Typecourrier;
-use App\User;
-use App\Typeservice;
-use App\Grade;
-use App\Service;
-use Illuminate\Support\Facades\Hash;
-
-
-
->>>>>>> Sync_again_01-09
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -25,7 +10,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-<<<<<<< HEAD
         Typeservice::create([
             'nom_type_service' => 'type1',
             'abr_type_service' => 't1',
@@ -65,7 +49,6 @@ class DatabaseSeeder extends Seeder
             'service_id'  =>'1'
         ]);
         // $this->call(UserSeeder::class);
-=======
         Classement::create([
             'nom_class' => 'class1'
         ]);
@@ -105,6 +88,5 @@ class DatabaseSeeder extends Seeder
             'abr_service' => 's1'
         ]);
 
->>>>>>> Sync_again_01-09
     }
 }

@@ -17,12 +17,9 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->string('nom_service');
             $table->string('abr_service');
-<<<<<<< HEAD
             $table->integer('service_id')->nullable();
-=======
 
             $table->integer('user_id');
->>>>>>> Sync_again_01-09
             $table->timestamps();
         });
     }
