@@ -32,3 +32,8 @@ Route::resource('typecourrier', 'TypecourrierController');
 Route::resource('mention', 'MentionController');
 
 Route::resource('classement', 'ClassementController');
+
+Route::get('/datatable', 'ClassementController@datatable');
+
+Route::get('api/typecourrier/','TypeserviceController@getTypes')->name('type.getTypes');
+
