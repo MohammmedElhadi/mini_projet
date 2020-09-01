@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class CreateTypecourriersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,9 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('typecourriers', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_service');
-            $table->string('abr_service');
-<<<<<<< HEAD
-            $table->integer('service_id')->nullable();
-=======
-
-            $table->integer('user_id');
->>>>>>> Sync_again_01-09
+            $table->string('nom_typecourrier');
             $table->timestamps();
         });
     }
@@ -34,6 +27,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('typecourriers');
     }
 }

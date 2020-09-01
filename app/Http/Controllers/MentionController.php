@@ -35,7 +35,17 @@ class MentionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(),[
+    		'nom_mention' => 'required' 
+		]);
+
+    	$data = request()->all();
+    	$mention = new Mention();
+    	$mention->nom_mention = $data['nom_mention'];
+    	$mention->save();
+     	session()->flash('success','Mention enregistré  avec succès');
+
+    	return redirect('/mention');
     }
 
     /**
@@ -69,7 +79,21 @@ class MentionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(),[
+    		'nom_mention' => 'required'
+        ]);   	
+        
+
+     	$data = $request->all();
+         
+        $mention = Mention::find($id);
+        
+     	$mention->nom_mention = $data['nom_mention'];
+     	$mention->save();
+
+     	session()->flash('success','Classment modifié avec succès');
+
+     	return redirect('/mention'); 
     }
 
     /**
@@ -78,8 +102,11 @@ class MentionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Mention $mention)
     {
-        //
+        $mention->delete();
+        session()->flash('success','Mention supprimié avec succès');
+   
+       return redirect('/mention');
     }
 }

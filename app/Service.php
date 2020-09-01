@@ -25,13 +25,13 @@ class Service extends Model
     {
         return $this->belongsTo('App\Typeservice');
     }
-    public function user()
+    public function chef_service()
     {
-        return $this->belongsTo('App\User')->using('App\ChefService');
+        return $this->belongsTo('App\User');
     }
     public function users()
     {
-        return $this->belongsTo('App\User')->using('App\ElementService');
+        return $this->hasMany('App\User');
     }
 
 }

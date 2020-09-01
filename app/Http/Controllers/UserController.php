@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+
 
 class UserController extends Controller
 {
@@ -13,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        return view('user.index')->with('users',User::All());;
     }
 
     /**
@@ -34,21 +36,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $post= Post::create([
-            'nom'=>$request->nom,
-            'description'=>$request->description,
-            'content'=> $request->content,
-            'image'=>$image,
-            'category_id'=>$request->category,
-            'published_at'=>$request->published_at
-            
-        ]);
-        if($request)
-        $post->tags()->attach($request->tags);
 
-        session()->flash('success','Post Created Successfully');
-
-        return redirect('posts');
     }
 
     /**
