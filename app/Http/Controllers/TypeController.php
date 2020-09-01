@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Service;
 
-class ServiceController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        // $services = Service::all();
-        // dd($services[1]->service_pere);
-        return view('service.index')->with('services',Service::All());
+        return view('typeservice.index');
     }
 
     /**
@@ -37,13 +34,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request);
-        $service = Service::create([
-            'nom_service' => $request->nom_service,
-            'abr_service' => $request->abr_service,
-            
-        ]);
-        return redirect()->back();
+        //
     }
 
     /**
@@ -90,4 +81,8 @@ class ServiceController extends Controller
     {
         //
     }
+
+  
+
+
 }

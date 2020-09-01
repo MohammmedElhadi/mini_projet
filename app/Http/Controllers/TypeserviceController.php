@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Service;
-
-class ServiceController extends Controller
+use App\Typeservice;
+class TypeserviceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        // $services = Service::all();
-        // dd($services[1]->service_pere);
-        return view('service.index')->with('services',Service::All());
+        //
     }
 
     /**
@@ -37,13 +34,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request);
-        $service = Service::create([
-            'nom_service' => $request->nom_service,
-            'abr_service' => $request->abr_service,
-            
-        ]);
-        return redirect()->back();
+        //
     }
 
     /**
@@ -89,5 +80,11 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getTypes(){
+        $query = Typeservice::select('nom_type_service' , 'abr_type_service');
+        dd($query);
+        return datatables($query)->make(true);
     }
 }

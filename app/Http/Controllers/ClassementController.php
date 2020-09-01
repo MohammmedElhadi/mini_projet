@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Classement;
 class ClassementController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +17,7 @@ class ClassementController extends Controller
     {
         return view('courrier.classement.index')->with('classements',Classement::All());
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
