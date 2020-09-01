@@ -149,31 +149,30 @@
     <!-- /.modal-dialog -->
   </div>
 
-  <!-- /.modal -->
-</div>
 
 
 
-<script>
-    function handleedit(id , nom_class){
-        form = document.getElementById('form-edit');
-        form.action = "/classement/"+id;
 
-        field = document.getElementById('nom_class_edit');
-        field.value = nom_class;
+  <script>
+      function handleedit(id , nom_class){
+          form = document.getElementById('form-edit');
+          form.action = "/classement/"+id;
 
-        $('#modal-edit').modal('show');
+          field = document.getElementById('nom_class_edit');
+          field.value = nom_class;
 
-    }
-    function handledelete(id){
-        form = document.getElementById('supprimer_form')
-        form.action = "/classement/"+id;
-        $('#supprimer_modal').modal('show');
+          $('#modal-edit').modal('show');
 
-    }
+      }
+      function handledelete(id){
+          form = document.getElementById('supprimer_form')
+          form.action = "/classement/"+id;
+          $('#supprimer_modal').modal('show');
+
+      }
 
 
-</script>
+  </script>
 
 
 

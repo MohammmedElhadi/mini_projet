@@ -22,6 +22,8 @@ class CreateCourriersTable extends Migration
             $table->integer('num_depart');
             $table->integer('num_arrive');
             $table->integer('classement_id');
+            $table->integer('mention_id');
+            $table->integer('typecourrier_id');
 
             $table->timestamps();
         });

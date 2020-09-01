@@ -150,30 +150,29 @@
   </div>
 
   <!-- /.modal -->
-</div>
 
 
 
-<script>
-    function handleedit(id , nom_mention){
-        form = document.getElementById('form-edit');
-        form.action = "/mention/"+id;
+  <script>
+      function handleedit(id , nom_mention){
+          form = document.getElementById('form-edit');
+          form.action = "/mention/"+id;
 
-        field = document.getElementById('nom_mention_edit');
-        field.value = nom_mention;
+          field = document.getElementById('nom_mention_edit');
+          field.value = nom_mention;
 
-        $('#modal-edit').modal('show');
+          $('#modal-edit').modal('show');
 
-    }
-    function handledelete(id){
-        form = document.getElementById('supprimer_form')
-        form.action = "/mention/"+id;
-        $('#supprimer_modal').modal('show');
+      }
+      function handledelete(id){
+          form = document.getElementById('supprimer_form')
+          form.action = "/mention/"+id;
+          $('#supprimer_modal').modal('show');
 
-    }
+      }
 
 
-</script>
+  </script>
 
 
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Typecourrier;
 class TypecourrierController extends Controller
 {
     /**
@@ -13,7 +13,7 @@ class TypecourrierController extends Controller
      */
     public function index()
     {
-        return view('courrier.type.index');
+        return view('courrier.type.index')->with('typecourriers',Typecourrier::All());
     }
 
     /**
@@ -34,7 +34,17 @@ class TypecourrierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(),[
+    		'nom_typecourrier' => 'required' 
+		]);
+
+    	$data = request()->all();
+    	$typecourrier = new Typecourrier();
+    	$typecourrier->nom_typecourrier = $data['nom_typecourrier'];
+    	$typecourrier->save();
+     	session()->flash('success','Type de courrier enregistré  avec succès');
+
+    	return redirect('/typecourrier');
     }
 
     /**
@@ -68,7 +78,21 @@ class TypecourrierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(),[
+    		'nom_typecourrier' => 'required'
+        ]);   	
+        
+
+     	$data = $request->all();
+         
+        $typecourrier = Typecourrier::find($id);
+        
+     	$typecourrier->nom_typecourrier = $data['nom_typecourrier'];
+     	$typecourrier->save();
+
+     	session()->flash('success','Classment modifié avec succès');
+
+     	return redirect('/typecourrier'); 
     }
 
     /**
@@ -77,8 +101,11 @@ class TypecourrierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Typecourrier $typecourrier)
     {
-        //
+        $typecourrier->delete();
+        session()->flash('success','Type de courrier supprimié avec succès');   
+        
+        return redirect('/typecourrier');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypecouriesTable extends Migration
+class CreateCourrierUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateTypecouriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('typecouries', function (Blueprint $table) {
+        Schema::create('courrier_user', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_type_courrier');
+            $table->bigInteger('courrier_id');
+            $table->integer('user_id');
+           // $table->enum('exp_des',['expediteur', 'destinataire'])->default('expediteur');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateTypecouriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('typecouries');
+        Schema::dropIfExists('courrier_user');
     }
 }
