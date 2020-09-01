@@ -24,8 +24,6 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<<<<<<< HEAD
-=======
  
 
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
@@ -36,7 +34,6 @@
 
 
 
->>>>>>> Sync_again_01-09
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -224,7 +221,6 @@
     </div>
 
 
-<<<<<<< HEAD
     <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -235,7 +231,6 @@
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('dist/js/demo.js') }}"></script>
 @yield('js')
-=======
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <!-- Bootstrap 4 -->
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -292,7 +287,6 @@
           $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
         }
       )
->>>>>>> Sync_again_01-09
   
       //Timepicker
       $('#timepicker').datetimepicker({

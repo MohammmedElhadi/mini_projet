@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Courrier;
 
 class CourrierController extends Controller
 {
@@ -13,7 +14,7 @@ class CourrierController extends Controller
      */
     public function index()
     {
-        return view('courrier.index');
+        return view('courrier.index')->with('courriers',Courrier::All());
     }
 
     /**
@@ -77,8 +78,16 @@ class CourrierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Courrier $courrier)
     {
-        //
+        //delete attached files
+
+        //delete the file
+
+        //delete the instance from db
+        $courrier->delete();
+        session()->flash('success','Courrier supprimé avec succès');
+
+    	return redirect('/courrier');
     }
 }

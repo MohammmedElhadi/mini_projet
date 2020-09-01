@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Typeservice;
+use App\Service;
+use App\Classement;
+use App\Mention;
+use App\typecourrier;
+use App\User;
+use App\Grade;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,44 +19,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Typeservice::create([
-            'nom_type_service' => 'type1',
-            'abr_type_service' => 't1',
-
+            'nom_type_service' => 'type_service1',
+            'abr_type_service' => 'ts1',
         ]);
     
         Typeservice::create([
-            'nom_type_service' => 'type2',
-            'abr_type_service' => 't2',
-
+            'nom_type_service' => 'type_service2',
+            'abr_type_service' => 'ts2',
         ]);
     
         Typeservice::create([
-            'nom_type_service' => 'type3',
-            'abr_type_service' => 't3',
-
+            'nom_type_service' => 'type_service3',
+            'abr_type_service' => 'ts3',
         ]);
 
-        Service::create([
-            'nom_service' => 'service1',
-            'abr_service' => 's1',
-            
-        ]);
-        Service::create([
-            'nom_service' => 'service2',
-            'abr_service' => 's2',
-            'service_id'  =>'1'
-        ]);
-        Service::create([
-            'nom_service' => 'service3',
-            'abr_service' => 's3',
-            'service_id'  => '2'
-        ]);
-        Service::create([
-            'nom_service' => 'service4',
-            'abr_service' => 's4',
-            'service_id'  =>'1'
-        ]);
-        // $this->call(UserSeeder::class);
+
+        $this->call(CourrierSeeder::class);
         Classement::create([
             'nom_class' => 'class1'
         ]);
@@ -78,15 +64,51 @@ class DatabaseSeeder extends Seeder
             'service_id' => '1'
 
         ]);
+        User::create([
+            'nom' => 'Philipe',
+            'prenom' => 'Mansour',
+            'matricule' => '201500099990',
+            'email' => 'Mansour@gmail.com',
+            'telephone' => '0777999330',
+            'password' => Hash::make('password'),
+            'grade_id' => '2',
+            'service_id' => '2'
+
+        ]);
         Grade::create([
             'nom_grade' => 'grade1',
             'abr_grade' => 'g1'
         ]);
-        service::create([
-            'nom_service' => 'sevice1',
-            'user_id' => '1',
-            'abr_service' => 's1'
+        Grade::create([
+            'nom_grade' => 'grade2',
+            'abr_grade' => 'g2'
         ]);
+        Service::create([
+            'nom_service' => 'service1',
+            'abr_service' => 's1',
+            'user_id' => '1'
+            
+        ]);
+        Service::create([
+            'nom_service' => 'service2',
+            'abr_service' => 's2',
+            'service_id'  =>'1',
+            'user_id' => '1'
 
+            ]);
+        Service::create([
+            'nom_service' => 'service3',
+            'abr_service' => 's3',
+            'service_id'  => '2',
+            'user_id' => '2'
+
+        ]);
+        Service::create([
+            'nom_service' => 'service4',
+            'abr_service' => 's4',
+            'service_id'  =>'1',
+            'user_id' => '1'
+
+        ]);
     }
 }

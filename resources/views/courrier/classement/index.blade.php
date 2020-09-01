@@ -168,7 +168,6 @@
           form = document.getElementById('supprimer_form')
           form.action = "/classement/"+id;
           $('#supprimer_modal').modal('show');
-
       }
 
 

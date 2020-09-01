@@ -45,8 +45,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\grade');
     }
 
-    public function courriers(){
-        return $this->belongsToMany('App\Courrier');
+    public function courriers_envoyer(){
+        return $this->HasMany('App\Courrier');
     }
-    
+    public function courriers_recu(){
+        return $this->blongsToMany('App\Courrier');
+    }
 }

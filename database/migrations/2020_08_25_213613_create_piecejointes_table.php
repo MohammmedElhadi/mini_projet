@@ -17,6 +17,7 @@ class CreatePiecejointesTable extends Migration
             $table->id();
             $table->string('url');
             $table->string('nom_piece_jointe');
+            $table->integer('courrier_id');
             $table->timestamps();
         });
     }

@@ -7,203 +7,188 @@
 @endsection
 
 @section('content')
+
 <div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-          <div class="col-12"> 
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{{ __('Courriers') }}</h3>
-                <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#modal-new"  >
-                    {{ __('Nouveau Courrier') }}
-                  </button>
-
-              </div>
+  <!-- Content Header (Page header) -->
 
 
+  <!-- Main content -->
+  <section class="content">
 
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                        <th>{{ __('N°Depart') }}</th>
-                        <th>{{ __('Objet') }}</th>
-                        <th>{{ __('Envoyer par') }}</th>
-                        <th>{{ __('Date Depart') }}</th>
-                        <th>{{ __('...') }}</th>
-                        <th>{{ __('Action') }}</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                  
+    <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{__('Courriers')}}</h3>
+        <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#modal-new"  >
+          {{ __('Nouveau Courrier') }}
+        </button>
+      </div>
+      <div class="card-body">
+               <table class="table table-bordered">
+                <thead>                  
                   <tr>
-                    <td>Trident</td>
-                    <td>Trident</td>
-
-                    <td> 4</td>
-                    <td> 4</td>
-                    <td> 
-                        <a href="">{{ __('Voir courrier') }}</a>
-                    </td>
-
-                    <td >
+                    <th style="width: 8%">#</th>
+                    <th>{{__('Objet')}}</th>
+                    <th>{{__('Expediteur')}}</th>
+                    <th style="width:15%">{{__('Etat')}}</th>
+                    <th style="width: 30%">{{__('Action')}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($courriers as $index => $courrier )
+                  <tr>
+                      <td>{{ $index + 1 }} </td>
+                      <td>{{ $courrier->objet_courrier }}</td>
+                      <td>{{ $courrier->expditeur->nom}}</td>
+                      <td>{{ $courrier->etat_courrier}}</td>
+                      <td >
                 
-                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-edit">
+                      <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $courrier->id }}' , '{{ $courrier->nom_class }}')" >
                             {{ __('Editer') }}
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-danger">
+                        <button type="button" id="supprimer" class="btn btn-danger btn-sm" onclick="handledelete(' {{ $courrier->id }} ')">
                             {{ __('Supprimer ') }}
+                        </button>
+                        <button type="button" id="details" class="btn btn-default btn-sm" onclick="">
+                          {{ __('Details ') }}
+                        </button>
+                        <button type="button" id="redirect" class="btn btn-success btn-sm" onclick="">
+                          {{ __('Redirect ') }}
                         </button>
                     </td>
                   </tr>
-
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                        <th>{{ __('N°Depart') }}</th>
-
-                        <th>{{ __('Objet') }}</th>
-                        <th>{{ __('Envoyer par') }}</th>
-
-                        <th>{{ __('Date Depart') }}</th>
-                        <th>{{ __('...') }}</th>
-                        <th>{{ __('Action') }}</th>
-                      </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </section>
-      <!-- /.content -->
-    <div class="modal fade" id="modal-new">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">{{__('Ajouter un courrier')}}</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            <form action="{{route('courrier.store')}}" method="post">
-                <div class="form-group">
-                  <label for="nom_service">Nom du service</label>
-                  <input type="text" name="nom_service" id="nom_service" class="form-control" placeholder="nom du service"  
-                                    class="text-muted">
-                </div>
-                <div class="form-group">
-                  <label for="abr">Abreviation</label>
-                  <input type="text" name="abr_service" id="abr" class="form-control" placeholder="Abreviation">
-                </div>
-                <div class="form-group">
-                    <label>Minimal</label>
-                    <select class="form-control select2" style="width: 100%;">
-                      <option selected="selected">Alabama</option>
-                      <option>Alaska</option>
-                      <option>California</option>
-                      <option>Delaware</option>
-                      <option>Tennessee</option>
-                      <option>Texas</option>
-                      <option>Washington</option>
-                    </select>
-                  </div>
-                
-            </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+                  @endforeach  
+                </tbody>
+              </table>
       </div>
-      <!-- /.modal -->
-  </div>
+      <!-- /.card-body -->
 
-
-  <div class="modal fade" id="modal-edit">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">{{__('Editer un courrier')}}</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        <form action="{{route('courrier.store')}}" method="post">
-            <div class="form-group">
-              <label for="nom_service">Nom du service</label>
-              <input type="text" name="nom_service" id="nom_service" class="form-control" placeholder="nom du service"  
-                                class="text-muted">
-            </div>
-            <div class="form-group">
-              <label for="abr">Abreviation</label>
-              <input type="text" name="abr_service" id="abr" class="form-control" placeholder="Abreviation">
-            </div>
-            <div class="form-group">
-                <label>Minimal</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
-              </div>
-            
-        </form>
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-      <!-- /.modal-content -->
+      <!-- /.card-footer-->
     </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+    <!-- /.card -->
+
+  </section>
+  <!-- /.content -->
 </div>
 
 
 
 
 
-
-  <div class="modal fade" id="modal-danger">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">{{__('Supprimer un service')}}</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-                <p>{{__('Etes-vous sûr que vous voulez supprimer ce courrier ? ')}}</p>
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default " data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-danger ">Oui</button>
-        </div>
+<div class="modal fade" id="modal-new">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Ajouter un courrier')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <!-- /.modal-content -->
+      <div class="modal-body">
+      <form action="{{route('courrier.store')}}" method="post">
+          @csrf
+          <div class="form-group">
+            <label for="nom_class">{{__('Nom de courrier')}}</label>
+            <input type="text" name="nom_class" id="nom_service" required autofocus class="form-control" placeholder="{{__('nom de courrier')}}"  
+                              class="text-muted">
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Ignore')}}</button>
+              <button type="submit" class="btn btn-primary">{{__('Ajouter')}}</button>
+          </div>            
+      </form>
+      </div>
+
     </div>
-    <!-- /.modal-dialog -->
+    <!-- /.modal-content -->
   </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="supprimer_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Supprimer un courrier')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id= "supprimer_form" action="" method="post">
+          @csrf
+          @method('DELETE')
+          <div class="modal-body">
+              <p>{{__('Etes-vous sûr que vous voulez supprimer ce courrier ? ')}}</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default " data-dismiss="modal">No</button>
+              <button type="submit" class="btn btn-danger ">Oui</button>
+          </div>
+      </form>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-edit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Modifier un courrier')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id= "form-edit" action="" method="post">
+          @csrf
+          @method('PUT')
+          <div class="form-group">
+              <label for="nom_class">{{__('Nom de courrier')}}</label>
+              <input type="text" name="nom_class" id="nom_class_edit" required autofocus class="form-control text-muted" value=""  >
+          </div>
+
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default " data-dismiss="modal">{{__('Ignorer')}}</button>
+              <button type="submit" class="btn btn-primary ">{{__('Modifier')}}</button>
+          </div>
+      </form>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+<script>
+    function handleedit(id , nom_class){
+        form = document.getElementById('form-edit');
+        form.action = "/courrier/"+id;
+
+        field = document.getElementById('nom_class_edit');
+        field.value = nom_class;
+
+        $('#modal-edit').modal('show');
+
+    }
+    function handledelete(id){
+        form = document.getElementById('supprimer_form')
+        form.action = "/courrier/"+id;
+        $('#supprimer_modal').modal('show');
+    }
+
+
+</script>
   <!-- /.modal -->
 </div>
 
@@ -221,17 +206,7 @@
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <!-- page script -->
 <script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-  });
+    form = document.getElementById("")
 </script>
 
 

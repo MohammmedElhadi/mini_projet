@@ -10,7 +10,10 @@ class Courrier extends Model
     {
         return $this->belongsToMany('App\Service');
     }
-    public function users(){
+    public function destinateurs(){
         return $this->belongsToMany('App\user');
+    }
+    public function expditeur(){
+        return $this->belongsTo('App\user','user_id');
     }
 }
