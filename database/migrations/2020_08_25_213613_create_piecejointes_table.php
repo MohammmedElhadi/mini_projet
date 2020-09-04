@@ -15,8 +15,8 @@ class CreatePiecejointesTable extends Migration
     {
         Schema::create('piecejointes', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->string('nom_piece_jointe');
+            $table->string('url_piece_jointe');
+            
             $table->integer('courrier_id');
             $table->timestamps();
         });
