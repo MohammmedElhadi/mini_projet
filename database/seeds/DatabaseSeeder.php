@@ -9,6 +9,7 @@ use App\typecourrier;
 use App\User;
 use App\Grade;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+
         Typeservice::create([
             'nom_type_service' => 'type_service1',
             'abr_type_service' => 'ts1',
@@ -34,7 +37,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        $this->call(CourrierSeeder::class);
         Classement::create([
             'nom_class' => 'class1'
         ]);
@@ -53,6 +55,12 @@ class DatabaseSeeder extends Seeder
         Typecourrier::create([
             'nom_typecourrier' => 'typecourrier2'
         ]);
+        Service::create([
+            'nom_service' => 'service1',
+            'abr_service' => 's1',
+            'user_id' => '1'
+            
+        ]);
         User::create([
             'nom' => 'ElHarachi',
             'prenom' => 'Hamid',
@@ -61,7 +69,8 @@ class DatabaseSeeder extends Seeder
             'telephone' => '0777999333',
             'password' => Hash::make('password'),
             'grade_id' => '1',
-            'service_id' => '1'
+            'service_id' => '1',
+            
 
         ]);
         User::create([
@@ -73,6 +82,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'grade_id' => '2',
             'service_id' => '2'
+            
+        ]);
+        User::create([
+            'nom' => 'Dahman',
+            'prenom' => 'Redoune',
+            'matricule' => '201500099994',
+            'email' => 'redoune@gmail.com',
+            'telephone' => '0777999430',
+            'password' => Hash::make('password'),
+            'grade_id' => '1',
+            'service_id' => '1'
 
         ]);
         Grade::create([
@@ -83,32 +103,9 @@ class DatabaseSeeder extends Seeder
             'nom_grade' => 'grade2',
             'abr_grade' => 'g2'
         ]);
-        Service::create([
-            'nom_service' => 'service1',
-            'abr_service' => 's1',
-            'user_id' => '1'
-            
-        ]);
-        Service::create([
-            'nom_service' => 'service2',
-            'abr_service' => 's2',
-            'service_id'  =>'1',
-            'user_id' => '1'
-
-            ]);
-        Service::create([
-            'nom_service' => 'service3',
-            'abr_service' => 's3',
-            'service_id'  => '2',
-            'user_id' => '2'
-
-        ]);
-        Service::create([
-            'nom_service' => 'service4',
-            'abr_service' => 's4',
-            'service_id'  =>'1',
-            'user_id' => '1'
-
-        ]);
+       
+        
+        factory('App\Courrier'::class,20)->create();
+        //$this->call(CourrierSeeder::class);
     }
 }

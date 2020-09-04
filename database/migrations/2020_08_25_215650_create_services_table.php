@@ -18,8 +18,7 @@ class CreateServicesTable extends Migration
             $table->string('nom_service');
             $table->string('abr_service');
             $table->integer('service_id')->nullable();
-
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }

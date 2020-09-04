@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Courrier;
+
 class CourrierSeeder extends Seeder
 {
     /**
@@ -11,6 +11,6 @@ class CourrierSeeder extends Seeder
      */
     public function run()
     {
-        $courrier = factory(App\Courrier::class,20)->create();
+        factory('App\Courrier'::class,20)->create();
     }
 }

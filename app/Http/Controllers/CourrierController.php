@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Courrier;
 
 class CourrierController extends Controller
@@ -14,7 +15,9 @@ class CourrierController extends Controller
      */
     public function index()
     {
-        return view('courrier.index')->with('courriers',Courrier::All());
+        //dd(Courrier::find(1)->expditeur->nom);     
+       // return view('courrier.index')->with('courriers',Courrier::All()->orderBy('classement_id'));
+        return view('courrier.index')->with('courriers',Courrier::all());
     }
 
     /**
