@@ -105,6 +105,10 @@ class ClassementController extends Controller
      */
     public function destroy(Classement $classement)
     {
+        if($classement->courriers()->count() > 0){
+            session()->flash('error','vous ne pouvez pas supprimer ce classement, il contient des courriers disponibles');
+            return redirect('/classement');
+        }
         $classement->delete();
         session()->flash('success','Classment supprimié avec succès');
    
