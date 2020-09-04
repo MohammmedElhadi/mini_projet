@@ -32,8 +32,10 @@
                     <tr>
                       <th style="width: 8%">{{__('Grade')}}</th>
                       <th>{{__('Nom')}}</th>
+                      <th>{{__('Prenom')}}</th>
                       <th>{{__('Matricule')}}</th>
                       <th style="width:15%">{{__('Service')}}</th>
+                      <th>{{__('Nbr Total')}}</th>
                       <th style="width: 30%">{{__('Action')}}</th>
                     </tr>
                   </thead>
@@ -42,8 +44,10 @@
                     <tr>
                         <td>{{$user->grade->abr_grade }} </td>
                         <td>{{$user->nom }} </td>
+                        <td>{{$user->prenom }} </td>
                         <td>{{$user->matricule }} </td>
                         <td>{{$user->service->abr_service}}</td>
+                        <td>{{$user->courriers_envoyer()->count() }} </td>
                         <td >
                   
                           <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $user->id }}' , '{{ $user->nom }}')" >

@@ -118,26 +118,13 @@ class CourrierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate(request(),[
-            'objet' => 'required',
-            'description_courrier' => 'required',
-            'date_depart' => 'required',
-            'date_arrive' => 'required',
-            'num_depart' => 'required',
-            'num_arrive' => 'required',
-            'classement' => 'required',
-            'mention' => 'required',
-            'typecourrier' => 'required',
-        ]);   	
-        
+   	
+
 
      	$data = $request->all();
-         
         $courrier = Courrier::find($id);
-        
-        //dd($data);
         $courrier->objet_courrier = $data['objet'];
-        $courrier->description_courrier = $data['description_courrier'];
+        $courrier->description_courrier = $data['description_edit'];
 
         $courrier->date_depart = $data['date_depart'];
         $courrier->date_arrive = $data['date_arrive'];
@@ -146,12 +133,11 @@ class CourrierController extends Controller
         $courrier->classement_id = $data['classement'];
         $courrier->mention_id = $data['mention'];
         $courrier->typecourrier_id = $data['typecourrier'];
-        $courrier->url_courrier = $data['source']->store('Courriers');
+        if($request->hasFile('source')){
+            Storage::delete($courrier->url_courrier);
+            $courrier->url_courrier = $data['source']->store('Courriers');
+        }
 
-
-        //$courrier->user_id = Auth::id();
-        // service here
-        
     	$courrier->save();
 
      	session()->flash('success','Courrier modifié avec succès');
