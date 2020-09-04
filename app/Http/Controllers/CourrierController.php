@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courrier;
+use App\Piecejointe;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Auth;
 
 class CourrierController extends Controller
 {
@@ -18,6 +21,12 @@ class CourrierController extends Controller
         //dd(Courrier::find(1)->expditeur->nom);     
        // return view('courrier.index')->with('courriers',Courrier::All()->orderBy('classement_id'));
         return view('courrier.index')->with('courriers',Courrier::all());
+       // dd(Courrier::find(23)->piece_jointe);
+        return view('courrier.index')->with('courriers',Courrier::All())
+                                    ->with('types', 'App\Typecourrier'::all())
+                                    ->with('classements', 'App\Classement'::all())
+                                    ->with('mentions', 'App\Mention'::all())
+                                    ->with('piecejointes', 'App\Piecejointe'::all());
     }
 
     /**
@@ -38,7 +47,48 @@ class CourrierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(),[
+            'num_depart' => 'min:0',
+            'num_arrive' => 'min:0',
+		]);
+        
+        //store file 
+        //dd($request->piece_jointes);
+        // dd($data['piece_jointes']);
+       
+        $data = request()->all();
+       // dd($data['piece_jointes']);
+    	$courrier = new Courrier();
+        $courrier->objet_courrier = $data['objet'];
+        $courrier->description_courrier = $data['description_courrier'];
+        $courrier->date_depart = $data['date_depart'];
+        $courrier->date_arrive = $data['date_arrive'];
+        $courrier->num_depart = $data['num_depart'];
+        $courrier->num_arrive = $data['num_arrive'];
+        $courrier->classement_id = $data['classement'];
+        $courrier->mention_id = $data['mention'];
+        $courrier->typecourrier_id = $data['typecourrier'];
+        $courrier->user_id = Auth::id();
+
+
+        // service here
+        
+        $courrier->url_courrier = $data['source']->store('Courriers');
+        $courrier->save();
+        //create pieces jointe
+        foreach($data['piece_jointes'] as $piece)
+        {
+            $jointe = $piece->store('Piece joint');
+
+            'App\Piecejointe'::create([
+                'url_piece_jointe' => $jointe,
+                'courrier_id' => $courrier->id,
+            ]);
+        }
+        //dd($courrier->piece_jointe[0]);
+     	session()->flash('success','Courrier enregistré  avec succès');
+
+    	return redirect('/courrier');
     }
 
     /**
@@ -72,7 +122,45 @@ class CourrierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(),[
+            'objet' => 'required',
+            'description_courrier' => 'required',
+            'date_depart' => 'required',
+            'date_arrive' => 'required',
+            'num_depart' => 'required',
+            'num_arrive' => 'required',
+            'classement' => 'required',
+            'mention' => 'required',
+            'typecourrier' => 'required',
+        ]);   	
+        
+
+     	$data = $request->all();
+         
+        $courrier = Courrier::find($id);
+        
+        //dd($data);
+        $courrier->objet_courrier = $data['objet'];
+        $courrier->description_courrier = $data['description_courrier'];
+
+        $courrier->date_depart = $data['date_depart'];
+        $courrier->date_arrive = $data['date_arrive'];
+        $courrier->num_depart = $data['num_depart'];
+        $courrier->num_arrive = $data['num_arrive'];
+        $courrier->classement_id = $data['classement'];
+        $courrier->mention_id = $data['mention'];
+        $courrier->typecourrier_id = $data['typecourrier'];
+        $courrier->url_courrier = $data['source']->store('Courriers');
+
+
+        //$courrier->user_id = Auth::id();
+        // service here
+        
+    	$courrier->save();
+
+     	session()->flash('success','Courrier modifié avec succès');
+
+     	return redirect('/courrier'); 
     }
 
     /**
@@ -82,15 +170,34 @@ class CourrierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Courrier $courrier)
-    {
-        //delete attached files
-
-        //delete the file
-
-        //delete the instance from db
+    {   
+        foreach($courrier->piece_jointe as $piece_jointe){
+            Storage::delete($piece_jointe->url_piece_jointe);
+            $piece_jointe->delete();
+        }
+        Storage::delete($courrier->url_courrier);
         $courrier->delete();
         session()->flash('success','Courrier supprimé avec succès');
 
     	return redirect('/courrier');
     }
+    public function deleteattachment(Request $request) {
+        $piecejointe = Piecejointe::find(request('url_piece_jointe'))->delete();
+        //$path = public_path().'/attachments/'.$id.'/'.request('url_piece_jointe');
+        //unlink($path);
+
+        return response()->json($piecejointe);
+
+    }
+    public function get_pieces_jointe(Request $request){
+        return response()->json(Courrier::find($request->id)->piece_jointe);
+    }
+    public function set_pieces_jointe(Request $request){
+        
+
+        return response()->json($request->id);
+    }
+
+
+
 }

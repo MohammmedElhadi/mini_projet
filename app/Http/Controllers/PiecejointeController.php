@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mention;
+use App\Piecejointe;
 
-class MentionController extends Controller
+
+class PiecejointeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class MentionController extends Controller
      */
     public function index()
     {
-        return view('courrier.mention.index')->with('mentions',Mention::All());
+        //
     }
 
     /**
@@ -33,19 +34,18 @@ class MentionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $re)
     {
-        $this->validate(request(),[
-    		'nom_mention' => 'required' 
-		]);
+      //create pieces jointe
+      foreach($data['piece_jointes'] as $piece)
+      {
+          $jointe = $piece->store('Piece joint');
 
-    	$data = request()->all();
-    	$mention = new Mention();
-    	$mention->nom_mention = $data['nom_mention'];
-    	$mention->save();
-     	session()->flash('success','Mention enregistré  avec succès');
-
-    	return redirect('/mention');
+          'App\Piecejointe'::create([
+              'url_piece_jointe' => $jointe,
+              'courrier_id' => $courrier->id,
+          ]);
+      }  
     }
 
     /**
@@ -79,21 +79,7 @@ class MentionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate(request(),[
-    		'nom_mention' => 'required'
-        ]);   	
-        
-
-     	$data = $request->all();
-         
-        $mention = Mention::find($id);
-        
-     	$mention->nom_mention = $data['nom_mention'];
-     	$mention->save();
-
-     	session()->flash('success','Classment modifié avec succès');
-
-     	return redirect('/mention'); 
+        //
     }
 
     /**
@@ -102,15 +88,11 @@ class MentionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mention $mention)
-    {
-        if($mention->courriers()->count() > 0){
-            session()->flash('error','vous ne pouvez pas supprimer cette mention, elle contient des courriers disponibles');
-            return redirect('/mention');
-        }
-        $mention->delete();
-        session()->flash('success','Mention supprimié avec succès');
-   
-       return redirect('/mention');
+    public function destroy($id){
+        Piecejointe::find($id)->delete($id);
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
+    
     }
 }

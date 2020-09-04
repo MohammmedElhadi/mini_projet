@@ -103,6 +103,10 @@ class TypecourrierController extends Controller
      */
     public function destroy(Typecourrier $typecourrier)
     {
+        if($typecourrier->courriers()->count() > 0){
+            session()->flash('error','vous ne pouvez pas supprimer ce type, il appartient a des courriers disponibles');
+            return redirect('/typecourrier');
+        }
         $typecourrier->delete();
         session()->flash('success','Type de courrier supprimié avec succès');   
         

@@ -13,10 +13,11 @@ $factory->define(Courrier::class, function (Faker $faker) {
         'date_arrive'=>$faker->dateTime(),
         'num_depart'=>$faker->numberBetween(0,100),
         'num_arrive'=>$faker->numberBetween(0,100),
-        'etat_courrier'=>false,
+        'etat_courrier'=>$faker->numberBetween(0,2),
         'classement_id'=>$faker->numberBetween(1,2),
         'mention_id'=>$faker->numberBetween(1,2),
         'typecourrier_id'=>$faker->numberBetween(1,2),
         'user_id'=>$faker->numberBetween(1,2),
+        'description_courrier' => $faker->paragraph(10)
     ];
 });
