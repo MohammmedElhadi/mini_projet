@@ -16,16 +16,17 @@ class CreateCourriersTable extends Migration
         Schema::create('courriers', function (Blueprint $table) {
             $table->id();
             $table->string('objet_courrier');
+            $table->text('description_courrier')->nullalbe();
             $table->string('url_courrier');
             $table->timestamp('date_depart')->nullable();
             $table->timestamp('date_arrive')->nullable();
-            $table->integer('num_depart');
-            $table->integer('num_arrive');
-            $table->boolean('etat_courrier')->default(false);
+            $table->integer('num_depart')->nullable();
+            $table->integer('num_arrive')->nullable();
+            $table->integer('etat_courrier')->default(0);
             $table->integer('classement_id');
             $table->integer('mention_id');
             $table->integer('typecourrier_id');
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
 
             $table->timestamps();
         });

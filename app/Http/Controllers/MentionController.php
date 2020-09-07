@@ -104,6 +104,10 @@ class MentionController extends Controller
      */
     public function destroy(Mention $mention)
     {
+        if($mention->courriers()->count() > 0){
+            session()->flash('error','vous ne pouvez pas supprimer cette mention, elle contient des courriers disponibles');
+            return redirect('/mention');
+        }
         $mention->delete();
         session()->flash('success','Mention supprimié avec succès');
    

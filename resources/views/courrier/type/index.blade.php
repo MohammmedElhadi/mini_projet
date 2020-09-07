@@ -58,6 +58,9 @@
   </div>
   <!-- /.content-wrapper -->
 
+
+
+  
   <div class="modal fade" id="modal-new">
     <div class="modal-dialog">
       <div class="modal-content">
