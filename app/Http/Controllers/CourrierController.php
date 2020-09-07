@@ -118,9 +118,6 @@ class CourrierController extends Controller
      */
     public function update(Request $request, $id)
     {
-   	
-
-
      	$data = $request->all();
         $courrier = Courrier::find($id);
         $courrier->objet_courrier = $data['objet'];

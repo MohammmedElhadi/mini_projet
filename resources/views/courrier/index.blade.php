@@ -1,9 +1,9 @@
 @extends('layouts.panel')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
-<link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 <style>
 </style>
 
@@ -316,7 +316,7 @@
             <label for="typecourrier">{{__('Type du courrier')}}</label>
             <select class="form-control" name="typecourrier" id="typecourrier">
               @foreach ($types as $type)
-              <option value="{{$type->id}}">{{$type->nom_typecourrier}}</option>
+                <option value="{{$type->id}}">{{$type->nom_typecourrier}}</option>
               @endforeach
             </select>
           </div>
@@ -457,10 +457,7 @@
 
 
     function handle( id ,courrier_id ){
-
-
       var token = $("meta[name='csrf-token']").attr("content");
-     // console.log($("meta[name='csrf-token']").attr("content"));
       $.ajax(
       {
           url: "piecejointes/" +  id,
