@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Piecejointe;
-
+use Illuminate\Support\Facades\Storage;
 
 class PiecejointeController extends Controller
 {
@@ -89,6 +89,8 @@ class PiecejointeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
+        $pj = Piecejointe::find($id);
+        Storage::delete($pj->url_piece_jointe);
         Piecejointe::find($id)->delete($id);
         return response()->json([
             'success' => 'Record deleted successfully!'

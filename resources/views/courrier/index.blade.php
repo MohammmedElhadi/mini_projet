@@ -1,10 +1,11 @@
 @extends('layouts.panel')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
-<link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
-
+  <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<style>
+</style>
 
 @endsection
 
@@ -28,8 +29,6 @@
                <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th style="width: 3%">{{__('N°Arrive')}}</th>
-                    <th style="width: 3%">{{__('N°Depart')}}</th>
                     <th>{{__('Objet')}}</th>
                     <th>{{__('Expediteur')}}</th>
                     <th style="width:8%">{{__('Etat')}}</th>
@@ -42,8 +41,6 @@
                 <tbody>
                   @foreach ($courriers as $index => $courrier )
                   <tr>
-                      <td>{{ $courrier->num_arrive }} </td>
-                      <td>{{ $courrier->num_depart }} </td>
                       <td>{{ $courrier->objet_courrier }}</td>
                       <td>{{ $courrier->expditeur->nom}}</td>
                       <td>@switch($courrier->etat_courrier)
@@ -79,8 +76,6 @@
                         </button>
                         <button type="button" id="redirect" class="btn btn-success btn-sm" onclick=""><i class="fas fa-coffee"></i>
                         </button>
-                        <button type="button" id="piece_jointe_button" class="btn btn-default btn-sm" onclick="show_pjs_modal('{{$courrier->id}}' )"><i class="fas fa-coffee"></i>
-                        </button>
                     </td>
                   </tr>
                   @endforeach
@@ -99,8 +94,178 @@
 
 
 
+<div class="modal fade" id="modal-detail">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Details ')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
 
+        <table class="table table-sm table-striped">
+          <tbody>
+            <tr>
+                <td style="width: 18%">{{__('Objet :')}} </td>
+                <td id="objet_detail"></td>
+            </tr>
+            <tr>
+                <td  style="width: 18%">{{__('Description :')}} </td>
+                <td id="description_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Num du depart :')}} </td>
+              <td id="num_depart_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Num d arrive :')}} </td>
+              <td id="num_arrive_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Expiditeur :')}} </td>
+              <td id="expiditeur_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Distinateurs :')}} </td>
+              <td id="distinateur_detail"></td>
+            </tr>
 
+            <tr>
+              <td style="width: 18%">{{__('Date du depart :')}} </td>
+              <td id="date_depart_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Date d arrive :')}} </td>
+              <td id="date_arrive_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Etat :')}} </td>
+              <td id="etat_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Type :')}} </td>
+              <td id="typecourrier_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Classement :')}} </td>
+              <td id="classement_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 18%">{{__('Mention :')}} </td>
+              <td id="mention_detail"></td>
+            </tr>
+            <tr>
+              <td style="width: 20%"></td>
+              <td><img id="image_detail" style="width: 80%;" ></td>
+            </tr>
+          </tbody>
+        </table>
+
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Retour')}}</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">{{__('OK')}}</button>
+          </div>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-edit">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Ajouter un courrier')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="form-edit" action="" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+              <label for="objet">{{__('Objet')}}</label>
+              <input type="text" name="objet" id="objet_edit" required autofocus class="form-control" placeholder="{{__('Objet du courrier')}}" value=""
+                                class="text-muted">
+            </div>
+            <div class="form-group">
+              <label for="objet">{{__('Description')}}</label>
+              <textarea type="text" name="description_edit" id="description_edit" required autofocus class="form-control" placeholder="{{__('Description du courrier')}}" value=""
+                                class="text-muted"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="date_depart">{{__('date du depart')}}</label>
+              <input type="date" name="date_depart" id="date_depart_edit" required autofocus class="form-control" placeholder="{{__('date du depart')}}" value=""
+                                class="text-muted">
+            </div>
+            <div class="form-group">
+              <label for="date_arrive">{{__('date d arrive')}}</label>
+              <input type="date" name="date_arrive" id="date_arrive_edit" required autofocus class="form-control" placeholder="{{__('date d arrive')}}" value=""
+                                class="text-muted">
+            </div>
+            <div class="form-group">
+              <label for="num_depart">{{__('Num du depart')}}</label>
+              <input type="number" name="num_depart" id="num_depart_edit" required autofocus class="form-control" placeholder="{{__('Num du depart')}}" value=""
+                                class="text-muted">
+            </div>
+            <div class="form-group">
+              <label for="num_arrive">{{__('Num d arrive')}}</label>
+              <input type="number" name="num_arrive" id="num_arrive_edit" required autofocus class="form-control" placeholder="{{__('Num d arrive')}}" value="2014-02-09"
+                                class="text-muted">
+            </div>
+
+            <div class="form-group">
+              <label for="typecourrier">{{__('Type du courrier')}}</label>
+              <select class="form-control" name="typecourrier" id="typecourrier_edit">
+                @foreach ($types as $type)
+                <option value="{{$type->id}}">{{$type->nom_typecourrier}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="classement">{{__('Classement du courrier')}}</label>
+              <select class="form-control" name="classement" id="classement_edit">
+                @foreach ($classements as $classement)
+                <option value="{{$classement->id}}">{{$classement->nom_class}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="mention">{{__('Mention du courrier')}}</label>
+              <select class="form-control" name="mention" id="mention_edit">
+                @foreach ($mentions as $mention)
+                <option value="{{$mention->id}}">{{$mention->nom_mention}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="source">{{__('Fichier')}}</label>
+              <input hidden default="false" id="url_courrier_edit" >
+              <input  class  = "form-control" type="file" name="source" id="source_edit" accept="image/*">
+            </div>
+            <div class="form-group">
+              <label for="source">{{__('Piece Jointes')}}</label>
+                  <div id = "pj_div"></div>       
+            </div>
+            
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Ignore')}}</button>
+                <button type="submit" class="btn btn-primary">{{__('Modifier')}}</button>
+            </div>
+        </form>
+
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
 <div class="modal fade" id="modal-new">
   <div class="modal-dialog modal-lg">
@@ -151,7 +316,7 @@
             <label for="typecourrier">{{__('Type du courrier')}}</label>
             <select class="form-control" name="typecourrier" id="typecourrier">
               @foreach ($types as $type)
-              <option value="{{$type->id}}">{{$type->nom_typecourrier}}</option>
+                <option value="{{$type->id}}">{{$type->nom_typecourrier}}</option>
               @endforeach
             </select>
           </div>
@@ -221,247 +386,18 @@
   <!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="modal-edit">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">{{__('Ajouter un courrier')}}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form id="form-edit" action="" method="post" enctype="multipart/form-data">
-          @csrf
-          @method('PUT')
-          <div class="form-group">
-            <label for="objet">{{__('Objet')}}</label>
-            <input type="text" name="objet" id="objet_edit" required autofocus class="form-control" placeholder="{{__('Objet du courrier')}}" value=""
-                              class="text-muted">
-          </div>
-          <div class="form-group">
-            <label for="objet">{{__('Description')}}</label>
-            <textarea type="text" name="description_edit" id="description_edit" required autofocus class="form-control" placeholder="{{__('Description du courrier')}}" value=""
-                              class="text-muted"></textarea>
-          </div>
 
-          <div class="form-group">
-            <label for="date_depart">{{__('date du depart')}}</label>
-            <input type="date" name="date_depart" id="date_depart_edit" required autofocus class="form-control" placeholder="{{__('date du depart')}}" value=""
-                              class="text-muted">
-          </div>
-          <div class="form-group">
-            <label for="date_arrive">{{__('date d arrive')}}</label>
-            <input type="date" name="date_arrive" id="date_arrive_edit" required autofocus class="form-control" placeholder="{{__('date d arrive')}}" value=""
-                              class="text-muted">
-          </div>
-          <div class="form-group">
-            <label for="num_depart">{{__('Num du depart')}}</label>
-            <input type="number" name="num_depart" id="num_depart_edit" required autofocus class="form-control" placeholder="{{__('Num du depart')}}" value=""
-                              class="text-muted">
-          </div>
-          <div class="form-group">
-            <label for="num_arrive">{{__('Num d arrive')}}</label>
-            <input type="number" name="num_arrive" id="num_arrive_edit" required autofocus class="form-control" placeholder="{{__('Num d arrive')}}" value="2014-02-09"
-                              class="text-muted">
-          </div>
-
-          <div class="form-group">
-            <label for="typecourrier">{{__('Type du courrier')}}</label>
-            <select class="form-control" name="typecourrier" id="typecourrier_edit">
-              @foreach ($types as $type)
-              <option value="{{$type->id}}">{{$type->nom_typecourrier}}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="classement">{{__('Classement du courrier')}}</label>
-            <select class="form-control" name="classement" id="classement_edit">
-              @foreach ($classements as $classement)
-              <option value="{{$classement->id}}">{{$classement->nom_class}}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="mention">{{__('Mention du courrier')}}</label>
-            <select class="form-control" name="mention" id="mention_edit">
-              @foreach ($mentions as $mention)
-              <option value="{{$mention->id}}">{{$mention->nom_mention}}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="source">{{__('Fichier')}}</label>
-            <br/>
-            <a href="" id="url_courrier_edit"  target="_blank">{{__('Voir le courrier')}}</a>
-
-            <input  class  = "form-control" type="file" name="source" id="source_edit" accept="image/*" value="">
-          </div>
-          {{-- <div class="form-group">
-            <label for="source">{{__('Piece Jointes')}}</label>
-            <br/>
-
-           <div id="here">
-              <a onclick=" add('{{ $courrier->id }}')" class="btn btn-app" style="width: 8%">
-                <input name="add_piecejointe" type="file" id="add_piecejointe" />
-                <i class="fas fa-plus"></i>
-              </a>
-              @foreach ( $courrier->piece_jointe as $piecejointe)
-                  <img src="{{asset('storage/').'/'.$piecejointe->url_piece_jointe}}" class="btn btn-app">
-                  <a onclick="handle(' {{ $piecejointe->id }} ')" >Delete Record</a>
-                @endforeach
-           </div>
-          </div> --}}
-          <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Ignore')}}</button>
-              <button type="submit" class="btn btn-primary">{{__('Modifier')}}</button>
-          </div>
-      </form>
-
-      </div>
-
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-
-<div class="modal fade" id="modal-detail">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">{{__('Details ')}}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <table class="table table-sm table-striped">
-          <tbody>
-            <tr>
-                <td>{{__('Objet :')}} </td>
-                <td id="objet_detail"></td>
-            </tr>
-            <tr>
-                <td>{{__('Description :')}} </td>
-                <td id="description_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Num du depart :')}} </td>
-              <td id="num_depart_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Num d arrive :')}} </td>
-              <td id="num_arrive_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Expiditeur :')}} </td>
-              <td id="expiditeur_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Distinateurs :')}} </td>
-              <td id="distinateur_detail"></td>
-            </tr>
-
-            <tr>
-              <td>{{__('Date du depart :')}} </td>
-              <td id="date_depart_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Date d arrive :')}} </td>
-              <td id="date_arrive_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Etat :')}} </td>
-              <td id="etat_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Type :')}} </td>
-              <td id="typecourrier_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Classement :')}} </td>
-              <td id="classement_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Mention :')}} </td>
-              <td id="mention_detail"></td>
-            </tr>
-            <tr>
-              <td>{{__('Pieces Jointes :')}} </td>
-              <td id="piecejointe_detail">
-                @foreach ($piecejointes as $piecejointe)
-                <img src="{{asset('storage/').'/'.$piecejointe->url_piece_jointe}}" class="btn btn-app">
-                @endforeach
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-          <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Ignore')}}</button>
-              <button type="submit" class="btn btn-primary">{{__('Ajouter')}}</button>
-          </div>
-      </div>
-
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-
-<div class="modal fade" id="piece_jointe_modal">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Pieces Jointes</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="heree">
-          <form id = "add_pj_form" action="{{route('piecejointe.store')}}" method="post" enctype="multipart/form-data">
-            @csrf
-            <input name="add_piecejointe" type="file" id="add_piecejointe" multiple />
-            <button type="submit"  id="add_piecejointe_btn" class="btn btn-app" style="width: 8%"><i class="fas fa-plus"></i></button>
-        </form>
-          <div id = "pj_div"></div>
-          {{-- @foreach ( $courrier->piece_jointe as $piecejointe)
-              <img src="{{asset('storage/').'/'.$piecejointe->url_piece_jointe}}" class="btn btn-app">
-              <a onclick="handle(' {{ $piecejointe->id }} ')" ><i class="fa fa-window-close" aria-hidden="true"></i></a>
-          @endforeach --}}
-       </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 <script>
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+
 
     function handleedit(data){
-
-
         var courrier = JSON.parse(data);
         var base  = '{{ URL::asset('storage/') }}' +'/' + courrier.url_courrier;
-        console.log(base)
+        ajax_get_pjs(courrier.id);
         document.getElementById('objet_edit').value = courrier.objet_courrier;
         document.getElementById('description_edit').value  = courrier.description_courrier;
-        document.getElementById('url_courrier_edit').href = base;
         document.getElementById('date_depart_edit').value = courrier.date_depart.toString().split(" ")[0];
         document.getElementById('date_arrive_edit').value = courrier.date_arrive.toString().split(" ")[0];
         document.getElementById('num_depart_edit').value = courrier.num_depart;
@@ -469,7 +405,7 @@
         document.getElementById('classement_edit').value = courrier.classement_id;
         document.getElementById('mention_edit').value = courrier.mention_id;
         document.getElementById('typecourrier_edit').value = courrier.typecourrier_id;
-
+        //document.getElementById('source_edit').value = courrier.url_courrier;
         form = document.getElementById('form-edit');
         form.action = "/courrier/"+courrier.id;
 
@@ -491,23 +427,24 @@
         document.getElementById('typecourrier_detail').innerHTML  = type;
         document.getElementById('objet_detail').innerHTML  = courrier.objet_courrier;
         document.getElementById('expiditeur_detail').innerHTML  = grade_abr + '.' + nom + " " +prenom ;
-        //document.getElementById('objet_detail').innerHTML  = courrier.objet_courrier;
         switch(courrier.etat_courrier) {
-        case 0:
-            document.getElementById('etat_detail').innerHTML  = 'en attente';
-          break;
-        case 1:
-            document.getElementById('etat_detail').innerHTML  = 'envoye';
-          break;
-        case 2:
-            document.getElementById('etat_detail').innerHTML  = 'vu par';
-          break;
-        default:
-          // code block
+          case 0:
+              document.getElementById('etat_detail').innerHTML  = 'en attente';
+            break;
+          case 1:
+              document.getElementById('etat_detail').innerHTML  = 'envoye';
+            break;
+          case 2:
+              document.getElementById('etat_detail').innerHTML  = 'vu par';
+            break;
+          default:
+            // code block
           }
+        img =  document.getElementById('image_detail')
+        img.src = '{{ URL::asset('storage/') }}' +'/' + courrier.url_courrier;
 
 
-
+        console.log('why-----------------------')
         $('#modal-detail').modal('show');
 
     }
@@ -520,10 +457,7 @@
 
 
     function handle( id ,courrier_id ){
-
-
       var token = $("meta[name='csrf-token']").attr("content");
-     // console.log($("meta[name='csrf-token']").attr("content"));
       $.ajax(
       {
           url: "piecejointes/" +  id,
@@ -534,7 +468,7 @@
           },
 
       });
-             ajax_get_pjs(courrier_id)
+             ajax_get_pjs(courrier_id)  
       };
 
       function add(id){
@@ -579,12 +513,14 @@
     
     
    
+
+
 // elhadi /****/*/*/*/*/*/*/*/*/*/*/
 
 
 function ajax_get_pjs(id){
   div = document.getElementById('pj_div');
-  div.innerHTML = ''
+  div.innerHTML = '<button disabled id="add_piecejointe_btn" class="btn btn-app" style="width: 8%"><i class="fas fa-plus"></i></button>'
   // alimenter
   $.ajax(
             {
@@ -601,11 +537,8 @@ function ajax_get_pjs(id){
               a = document.createElement('a');
               i = document.createTextNode('i');
               img.src = '{{ URL::asset('storage/') }}' +'/' + piece.url_piece_jointe;
-              img.style
-              //console.log(img.src)
-              img.style = "width:8%"
               img.setAttribute("class","btn btn-app");
-              a.appendChild( document.createTextNode("delete"))
+              a.innerHTML='<i class="fa fa-window-close" aria-hidden="true"></i>';
               a.setAttribute("onclick", "handle('"+piece.id +"' , '"+ id +"' )");
               div.appendChild(img);
               div.appendChild(a);
@@ -622,7 +555,7 @@ function show_pjs_modal(id){
             $.ajax(
             {
             url: "set_piecejointe/",
-            type: 'DELETE',
+            type: 'POST',
             data: {
                 "id": id,
                 "data": $(this).serialize(),

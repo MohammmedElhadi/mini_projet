@@ -32,8 +32,10 @@
                     <tr>
                       <th style="width: 8%">{{__('Grade')}}</th>
                       <th>{{__('Nom')}}</th>
+                      <th>{{__('Prenom')}}</th>
                       <th>{{__('Matricule')}}</th>
                       <th style="width:15%">{{__('Service')}}</th>
+                      <th>{{__('Nbr Total')}}</th>
                       <th style="width: 30%">{{__('Action')}}</th>
                     </tr>
                   </thead>
@@ -42,14 +44,16 @@
                     <tr>
                         <td>{{$user->grade->abr_grade }} </td>
                         <td>{{$user->nom }} </td>
+                        <td>{{$user->prenom }} </td>
                         <td>{{$user->matricule }} </td>
                         <td>{{$user->service->abr_service}}</td>
+                        <td>{{$user->courriers_envoyer()->count() }} </td>
                         <td >
                   
-                          <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $user->id }}' , '{{ $user->nom }}')" >
+                        <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $user }}')" >
                               {{ __('Editer') }}
                           </button>
-                          <button type="button" id="supprimer" class="btn btn-danger btn-sm" onclick="handledelete(' {{ $user->id }} ')">
+                          <button type="button" id="supprimer" class="btn btn-danger btn-sm" onclick="handledelete(' {{ $user->id}} ')">
                               {{ __('Supprimer ') }}
                           </button>
                         </td>
@@ -94,56 +98,33 @@
             
             <div class="form-group">
               <label for="matricule">{{__('Matricule')}}</label>
-              <input type="text" name="matricule" id="matricule" required autofocus class="form-control" placeholder="{{__('')}}"  
+              <input type="text" name="matricule" id="matricule" required autofocus class="form-control" placeholder="{{__('matricule')}}"  
                                 class="text-muted">
             </div>
 
+
             <div class="form-group">
-              <label>Minimal</label>
-              <select class="form-control select2" style="width: 100%;">
-                <option selected="selected">Alabama</option>
-                <option>Alaska</option>
-                <option>California</option>
-                <option>Delaware</option>
-                <option>Tennessee</option>
-                <option>Texas</option>
-                <option>Washington</option>
+              <label>{{__('Grade')}}</label>
+              <select name="grade" class="form-control select2" style="width: 100%;">
+                @foreach ($grades as $grade)
+                  <option value="{{$grade->id}}" selected="selected">{{ $grade->nom_grade }}</option>
+                @endforeach
               </select>
             </div>
-
-
-
-
-
-
-
-
+            <div class="form-group">
+              <label>{{__('Service')}}</label>
+              <select name="service" class="form-control select2" style="width: 100%;">
+                @foreach ($services as $service)
+                  <option  value="{{$service->id}}" selected="selected">{{ $service->nom_service }}</option>
+                @endforeach
+              </select>
+            </div>
             <div class="modal-footer justify-content-between">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Ignore')}}</button>
                 <button type="submit" class="btn btn-primary">{{__('Ajouter')}}</button>
             </div>            
         </form>
+        
         </div>
 
       </div>
@@ -151,7 +132,6 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
-
 
   <div class="modal fade" id="supprimer_modal">
     <div class="modal-dialog">
@@ -196,9 +176,42 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="nom">{{__('Nom de utilisateur')}}</label>
-                <input type="text" name="nom" id="nom_edit" required autofocus class="form-control text-muted" value=""  >
+                <label for="nom">{{__('Nom')}}</label>
+                <input type="text" name="nom_edit" id="nom_edit" required autofocus class="form-control text-muted" value=""  >
             </div>
+            <div class="form-group">
+                <label for="prenom">{{__('Prenom')}}</label>
+                <input type="text" name="prenom_edit" id="prenom_edit" required autofocus class="form-control text-muted" value=""  >
+            </div>
+            <div class="form-group">
+                <label for="matricule">{{__('Matricule')}}</label>
+                <input type="text" name="matricule_edit" id="matricule_edit" required autofocus class="form-control text-muted" value=""  >
+            </div>
+
+            <div class="form-group">
+              <label for="grade">{{__('Grade')}}</label>
+              <select class="form-control" name="grade_edit" id="grade_edit">
+                @foreach ($grades as $grade)
+                  <option value="{{$grade->id}}">{{$grade->nom_grade}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="service">{{__('Service')}}</label>
+              <select class="form-control" name="service_edit" id="service_edit">
+                @foreach ($services as $service)
+                  <option value="{{$service->id}}">{{$service->nom_service}}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="email">{{__('Email')}}</label>
+              <input type="text" name="email_edit" id="email_edit" required autofocus class="form-control text-muted" value=""  >
+          </div>
+          <div class="form-group">
+            <label for="telephone">{{__('Telephone')}}</label>
+            <input type="text" name="telephone_edit" id="telephone_edit" autofocus class="form-control text-muted" value=""  >
+          </div>
 
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default " data-dismiss="modal">{{__('Ignorer')}}</button>
@@ -229,7 +242,7 @@
               <label for="nom">{{__('Nom de utilisateur')}}</label>
               <input type="text" name="nom" id="nom_service" required autofocus class="form-control" placeholder="{{__('nom de utilisateur')}}"  
                                 class="text-muted">
-            </div>
+              </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{__('Ignore')}}</button>
                 <button type="submit" class="btn btn-primary">{{__('Import')}}</button>
@@ -247,19 +260,31 @@
 
   <script>
 
-      function handleedit(id , nom){
-          form = document.getElementById('form-edit');
-          form.action = "/utilisateur/"+id;
 
-          field = document.getElementById('nom_edit');
-          field.value = nom;
 
-          $('#modal-edit').modal('show');
+
+
+
+      function handleedit(data){
+        var user = JSON.parse(data);
+        console.log(user);
+        document.getElementById('nom_edit').value = user.nom;
+        document.getElementById('prenom_edit').value  = user.prenom;
+        document.getElementById('matricule_edit').value = user.matricule;
+        document.getElementById('grade_edit').value = user.grade_id;
+        document.getElementById('service_edit').value = user.service_id;
+        document.getElementById('email_edit').value = user.email;
+        document.getElementById('telephone_edit').value = user.telephone;
+        
+        form = document.getElementById('form-edit');
+        form.action = "/users/"+user.id;
+        $('#modal-edit').modal('show');
 
       }
       function handledelete(id){
+
           form = document.getElementById('supprimer_form')
-          form.action = "/utilisateur/"+id;
+          form.action = "/users/"+id;
           $('#supprimer_modal').modal('show');
 
       }
