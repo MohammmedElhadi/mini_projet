@@ -151,7 +151,7 @@
               </div>
               <div class="form-group">
                 <label>{{__('Chef service')}}</label>
-                <select  required name="user_id" id = "user_id_e" class="form-control select2" style="width: 100%;">
+                <select   name="user_id" id = "user_id_e" class="form-control select2" style="width: 100%;">
                 </select>
               </div>
               
@@ -243,15 +243,16 @@
 @section('js')
 <script>
    function handleedit( dataa ,users_elements ){
-      form = document.getElementById('edit_form');
+    form = document.getElementById('edit_form');
      var service = JSON.parse(dataa);
      var elements = JSON.parse(users_elements);
      
      form.action = '{{URL::asset('service/')}}'+'/' + service.id;
-     form.setAttribute('method', 'PUT');
+    // form.setAttribute('method', 'PUT');
+    
      console.log(form.action)
      console.log(form.method)
-     //console.log(elements);
+     console.log(elements);
      document.getElementById('nom_service_e').value = service.nom_service;
      document.getElementById('abr_e').value = service.abr_service;
      // var opt_service = document.getElementById('option_service-'+service.service_id);

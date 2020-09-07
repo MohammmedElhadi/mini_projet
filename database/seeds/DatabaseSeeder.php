@@ -71,8 +71,19 @@ class DatabaseSeeder extends Seeder
             'grade_id' => '1',
             'service_id' => '1',
             
-
-        ]);
+            
+            ]);
+                User::create([
+                    'nom' => 'Dahman',
+                    'prenom' => 'Redoune',
+                    'matricule' => '201500099994',
+                    'email' => 'redoune@gmail.com',
+                    'telephone' => '0777999730',
+                    'password' => Hash::make('password'),
+                    'grade_id' => '1',
+                    'service_id' => '1',
+        
+                ]);
         User::create([
             'nom' => 'Philipe',
             'prenom' => 'Mansour',
@@ -81,19 +92,8 @@ class DatabaseSeeder extends Seeder
             'telephone' => '0777999330',
             'password' => Hash::make('password'),
             'grade_id' => '2',
-            'service_id' => '2'
+            'service_id' => '2',
             
-        ]);
-        User::create([
-            'nom' => 'Dahman',
-            'prenom' => 'Redoune',
-            'matricule' => '201500099994',
-            'email' => 'redoune@gmail.com',
-            'telephone' => '0777999430',
-            'password' => Hash::make('password'),
-            'grade_id' => '1',
-            'service_id' => '1'
-
         ]);
         Grade::create([
             'nom_grade' => 'grade1',
@@ -106,6 +106,6 @@ class DatabaseSeeder extends Seeder
        
         
         factory('App\Courrier'::class,20)->create();
-        //$this->call(CourrierSeeder::class);
+       // $this->call(CourrierSeeder::class);
     }
 }

@@ -84,15 +84,20 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $service = Service::find($id);
-        dd($request);
-        $data=$request->only(['nom_service', 'abr_service' , 'service_id' , 'user_id']);
-        $user = User::find($data['user_id']);
-        if($user->id != $service->user_id){
-            User::find($service->user_id)->est_chef = false;
-            $user->est_chef = true;
+        //dd($request);   
+        if($request->user_id){
+            $data=$request->only(['nom_service', 'abr_service' , 'service_id' , 'user_id']);
+            $user = User::find($data['user_id']);
+            if($user->id != $service->user_id){
+                User::find($service->user_id)->est_chef = false;
+                $user->est_chef = true;
+            }
+        }
+        else{
+            $data=$request->only(['nom_service', 'abr_service' , 'service_id']);
         }
         $service->update($data);
-       return redirect(route('service'));
+       return redirect()->back();
     }
 
     /**
