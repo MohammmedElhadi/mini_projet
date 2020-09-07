@@ -17,7 +17,8 @@ class ServiceController extends Controller
     {   //dd('App\User'::where('est_chef' , false)->get());
         // $services = Service::all();
         // dd(Service::All());
-        return view('service.index')->with('services',Service::All());
+        return view('service.index')->with('services',Service::All())
+                                    ->with('users',User::All());
                                     
     }
 
@@ -120,5 +121,19 @@ class ServiceController extends Controller
             $html_text = $html_text.'<option value="'.$user->id.'">'.$user->grade->abr_grade.'\.'.$user->nom.' '.$user->prenom.'</option>';
         }
         return ($html_text);
+    }
+
+
+    public function setElements (Request $request , $id){
+        $data = $request->all()['user_id'];
+        $users = User::find($data);
+        foreach($users as $user){
+            $user->service_id = $id;
+            $user->save();
+        }
+        session()->flash('success', 'Elements ajoutés avec succée');
+        return redirect()->back();
+
+
     }
 }

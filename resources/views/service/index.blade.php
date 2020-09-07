@@ -46,13 +46,13 @@
                                 <td>{{$service->courriers()->count()}}</td>
                                 <td >
                                   <button type="button" class="btn btn-success btn-sm" onclick="handleAddElements('{{ $service->id }}')" >
-                                    {{ __('Ajouter des éléments') }}
+                                   <i class="fas fa-user-plus    "></i>
                                   </button>
-                                <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $service }}' , '{{$service->users}}')" >
-                                      {{ __('Editer') }}
+                                  <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $service }}' , '{{$service->users}}')" >
+                                      <i class="fas fa-edit    "></i>
                                   </button>
                                   <button type="button" id="supprimer" class="btn btn-danger btn-sm" onclick="handledelete(' {{ $service->id }} ')">
-                                      {{ __('Supprimer ') }}
+                                      <i class="fa fa-trash" aria-hidden="true"></i>
                                   </button>
                               </td>
                             </tr>
@@ -192,7 +192,7 @@
     <!-- /.modal-dialog -->
   </div>
 {{-- modal add elements --}}
-<div class="modal fade" id="modal-new_elem">
+<div class="modal fade" id="modal_new_elem">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -202,25 +202,16 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="" method="post">
+      <form id="add_new_elements" action="" method="post">
         @csrf
         <div class="form-group">
-          <label for="nom_service">{{__('Nom du service')}}</label>
-          <input type="text" name="nom_service" id="nom_service" class="form-control" placeholder="nom du service"  
-                            class="text-muted">
-        </div>
-        <div class="form-group">
-          <label for="abr">{{__('Abreviation')}}</label>
-          <input type="text" name="abr_service" id="abr" class="form-control" placeholder="Abreviation">
-        </div>
-        <div class="form-group">
-            <label>{{__('Serevice père')}}</label>
-            <select name="service_id" id = "service_id" class="form-control select2" style="width: 100%;">
-              @foreach ($services as $service)
-                  <option value="{{$service->id}}"> {{$service->nom_service}}</option>
+            <label>Elements</label>
+            <select multiple name=user_id[]" class="form-control " style="width: 100%;">
+              @foreach ($users as $user)
+                  <option value="{{$user->id}}">{{$user->grade->abr_grade}}. {{$user->nom}} {{$user->prenom}}</option>
                @endforeach
             </select>
-          </div>
+        </div>
         
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -275,7 +266,14 @@
         select_chef.appendChild(opt); 
      }
      $('#modal-edit').modal('show')
-    }
+}
+
+function handleAddElements(id){
+  form = document.getElementById('add_new_elements');
+  form.action = 'service/add_element/'+id;
+  $('#modal_new_elem').modal('show')
+}
+
 </script>
 
 @endsection

@@ -37,4 +37,4 @@ Route::get('/datatable', 'ClassementController@datatable');
 
 Route::get('api/typecourrier/','TypeserviceController@getTypes')->name('type.getTypes');
 
-Route::get('service/{id}/get_elements' , 'ServiceController@getElenemts');
+Route::post('service/add_element/{id}' , 'ServiceController@setElements');
