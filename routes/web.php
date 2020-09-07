@@ -37,6 +37,9 @@ Route::get('/datatable', 'ClassementController@datatable');
 
 Route::get('api/typecourrier/','TypeserviceController@getTypes')->name('type.getTypes');
 
+
+Route::post('service/add_element/{id}' , 'ServiceController@setElements');
+
 Route::get('get_piecejointe/{id}','CourrierController@get_pieces_jointe');
 
 Route::delete('set_piecejointe','CourrierController@set_pieces_jointe');
@@ -44,3 +47,4 @@ Route::delete('set_piecejointe','CourrierController@set_pieces_jointe');
 Route::delete('piecejointes/{id}', 'PiecejointeController@destroy')->name('piecejointes.destroy');
 
 Route::POST('piecejointe', 'PiecejointeController@store')->name('piecejointe.store');
+
