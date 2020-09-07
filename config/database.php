@@ -44,7 +44,7 @@ return [
         ],
 
         'mysql' => [
-            'dump_binary_path' => 'C:\\xampp\\mysql\\bin',
+            'dump_binary_path' => 'C:/xampp/mysql/bin/',
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),

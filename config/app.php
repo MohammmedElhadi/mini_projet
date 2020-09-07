@@ -141,7 +141,7 @@ return [
          */
 
 
-
+        Spatie\Backup\BackupServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
