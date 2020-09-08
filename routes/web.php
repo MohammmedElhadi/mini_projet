@@ -44,3 +44,5 @@ Route::delete('set_piecejointe','CourrierController@set_pieces_jointe');
 Route::delete('piecejointes/{id}', 'PiecejointeController@destroy')->name('piecejointes.destroy');
 
 Route::POST('piecejointe', 'PiecejointeController@store')->name('piecejointe.store');
+
+Route::POST('users/import','UserController@import')->name('users.import');

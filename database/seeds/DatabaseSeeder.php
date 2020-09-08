@@ -8,7 +8,7 @@ use App\Mention;
 use App\typecourrier;
 use App\User;
 use App\Grade;
-
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     /**

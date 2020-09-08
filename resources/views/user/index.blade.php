@@ -236,11 +236,11 @@
           </button>
         </div>
         <div class="modal-body">
-        <form action="{{route('users.store')}}" method="post">
+        <form action="{{route('users.import')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-              <label for="nom">{{__('Nom de utilisateur')}}</label>
-              <input type="text" name="nom" id="nom_service" required autofocus class="form-control" placeholder="{{__('nom de utilisateur')}}"  
+              <label for="nom">{{__('Fichie exel')}}</label>
+              <input type="file" name="file_exel" id="file_exel" required autofocus class="form-control" accept=".xlsx,.csv" placeholder="{{__('Fichie exel')}}"  
                                 class="text-muted">
               </div>
             <div class="modal-footer justify-content-between">

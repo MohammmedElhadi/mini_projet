@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -124,4 +126,12 @@ class UserController extends Controller
    
        return redirect('/users');
     }
+    public function import(Request $request) 
+    {
+
+        Excel::import(new UsersImport, $request->file('file_exel'));
+        
+        return redirect('users')->with('success', 'All good!');
+    }
+
 }
