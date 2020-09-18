@@ -136,4 +136,17 @@ class ServiceController extends Controller
 
 
     }
+
+
+
+    public function manageService()
+
+    {
+        $services = Service::where('service_id', '=', 0)->get();
+        $allServices = Service::pluck('nom_service','id')->all();
+        return view('service.treeview',compact('services','allServices'));
+
+    }
+
+
 }

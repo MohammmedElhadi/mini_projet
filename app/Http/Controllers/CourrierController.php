@@ -23,6 +23,7 @@ class CourrierController extends Controller
                                     ->with('types', 'App\Typecourrier'::all())
                                     ->with('classements', 'App\Classement'::all())
                                     ->with('mentions', 'App\Mention'::all())
+                                    ->with('services', 'App\Service'::all())
                                     ->with('piecejointes', 'App\Piecejointe'::all());
     }
 
@@ -66,22 +67,24 @@ class CourrierController extends Controller
         $courrier->mention_id = $data['mention'];
         $courrier->typecourrier_id = $data['typecourrier'];
         $courrier->user_id = Auth::id();
+        if($request->hasFile('piece_jointes')){
+                   //create pieces jointe
+            foreach($data['piece_jointes'] as $piece)
+            {
+                $jointe = $piece->store('Piece joint');
 
+                'App\Piecejointe'::create([
+                    'url_piece_jointe' => $jointe,
+                    'courrier_id' => $courrier->id,
+                ]);
+            }
+        }
 
         // service here
         
         $courrier->url_courrier = $data['source']->store('Courriers');
         $courrier->save();
-        //create pieces jointe
-        foreach($data['piece_jointes'] as $piece)
-        {
-            $jointe = $piece->store('Piece joint');
 
-            'App\Piecejointe'::create([
-                'url_piece_jointe' => $jointe,
-                'courrier_id' => $courrier->id,
-            ]);
-        }
         //dd($courrier->piece_jointe[0]);
      	session()->flash('success','Courrier enregistré  avec succès');
 
