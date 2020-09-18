@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MyBackUpController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -49,3 +50,13 @@ Route::delete('piecejointes/{id}', 'PiecejointeController@destroy')->name('piece
 Route::POST('piecejointe', 'PiecejointeController@store')->name('piecejointe.store');
 
 Route::POST('users/import','UserController@import')->name('users.import');
+
+Route::get('service-tree-view',['uses'=>'ServiceController@manageService']);
+
+Route::get('backups', 'MyBackUpController@index')->name('backups.list');
+
+Route::get('backups/nouveau', 'MyBackUpController@nouveau_backup')->name('backup.nouveau');
+    
+Route::get('telecharger/{file}', 'MyBackUpController@telecharger')->name('backup.telecharger');
+
+Route::get('supprimer/{file}', 'MyBackUpController@supprimer')->name('backup.supprimer');

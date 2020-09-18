@@ -57,12 +57,35 @@ class DatabaseSeeder extends Seeder
         Service::create([
             'nom_service' => 'service1',
             'abr_service' => 's1',
-            'user_id' => '1'
+            'user_id' => '1',
+            'service_id' => 0
             
+        ]);
+        Service::create([
+            'nom_service' => 'service2',
+            'abr_service' => 's2',
+            'user_id' => '2',
+            'service_id' => 1
+
+        ]);
+        Service::create([
+            'nom_service' => 'service3',
+            'abr_service' => 's3',
+            'user_id' => '2',
+            'service_id' => 1
+
+        ]);
+        Service::create([
+            'nom_service' => 'service4',
+            'abr_service' => 's4',
+            'user_id' => '3',
+            'service_id' => 3
+
         ]);
         User::create([
             'nom' => 'ElHarachi',
             'prenom' => 'Hamid',
+            'est_admin' => true,
             'matricule' => '201500099999',
             'email' => 'hamid@gmail.com',
             'telephone' => '0777999333',
@@ -72,17 +95,6 @@ class DatabaseSeeder extends Seeder
             
             
             ]);
-                User::create([
-                    'nom' => 'Dahman',
-                    'prenom' => 'Redoune',
-                    'matricule' => '201500099994',
-                    'email' => 'redoune@gmail.com',
-                    'telephone' => '0777999730',
-                    'password' => Hash::make('password'),
-                    'grade_id' => '1',
-                    'service_id' => '1',
-        
-                ]);
         User::create([
             'nom' => 'Philipe',
             'prenom' => 'Mansour',
@@ -93,6 +105,16 @@ class DatabaseSeeder extends Seeder
             'grade_id' => '2',
             'service_id' => '2',
             
+        ]);
+        User::create([
+            'nom' => 'Dahman',
+            'prenom' => 'Redoune',
+            'matricule' => '201500099994',
+            'email' => 'redoune@gmail.com',
+            'telephone' => '0777999730',
+            'password' => Hash::make('password'),
+            'grade_id' => '1',
+            'service_id' => '1',
         ]);
         Grade::create([
             'nom_grade' => 'grade1',

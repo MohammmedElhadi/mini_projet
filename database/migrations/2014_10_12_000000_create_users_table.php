@@ -25,7 +25,8 @@ class CreateUsersTable extends Migration
             $table->integer('grade_id');
             $table->integer('service_id');
             $table->boolean('est_chef')->default(false);
-            
+            $table->boolean('est_admin')->default(false);
+
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
