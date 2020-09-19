@@ -122,7 +122,7 @@ class UserController extends Controller
             return redirect('/users');
         }
         $user->delete();
-        session()->flash('success','Classment supprimié avec succès');
+        session()->flash('success','Utilisateur supprimié avec succès');
    
        return redirect('/users');
     }
@@ -131,7 +131,7 @@ class UserController extends Controller
 
         Excel::import(new UsersImport, $request->file('file_exel'));
         
-        return redirect('users')->with('success', 'All good!');
+        return redirect('users')->with('success', 'Utilisateurs importé avec succès !');
     }
 
 }
