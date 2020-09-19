@@ -13,6 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     
 
+
     <link rel="stylesheet" href=" {{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -24,6 +25,7 @@
     <link rel="stylesheet" href=" {{ asset('dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
 
 
 
@@ -169,7 +171,7 @@
                     </a>
                   </li>
                 <li class="nav-item has-treeview">
-                  <a href="" class="nav-link">
+                <a href="{{ route('backups.list') }}" class="nav-link">
                       <i class="nav-icon fas fa-database"></i>
                       <p>
                         {{__('BackUp')}} 
@@ -335,6 +337,66 @@
 
   })
 </script>
+
 @yield('js')
+
+<script >
+  $.fn.extend({
+
+  treed: function (o) {
+    var openedClass = 'glyphicon-minus-sign';
+    var closedClass = 'glyphicon-plus-sign';
+    if (typeof o != 'undefined'){
+        if (typeof o.openedClass != 'undefined'){
+        openedClass = o.openedClass;
+        }
+        if (typeof o.closedClass != 'undefined'){
+        closedClass = o.closedClass;
+        }
+    };
+        /* initialize each of the top levels */
+        var tree = $(this);
+        tree.addClass("tree");
+        tree.find('li').has("ul").each(function () {
+            var branch = $(this);
+            branch.prepend("");
+            branch.addClass('branch');
+            branch.on('click', function (e) {
+                if (this == e.target) {
+                    var icon = $(this).children('i:first');
+                    icon.toggleClass(openedClass + " " + closedClass);
+                    $(this).children().children().toggle();
+                }
+            })
+            branch.children().children().toggle();
+        });
+        /* fire event from the dynamically added icon */
+        tree.find('.branch .indicator').each(function(){
+            $(this).on('click', function () {
+                $(this).closest('li').click();
+            });
+        });
+        /* fire event to open branch if the li contains an anchor instead of text */
+        tree.find('.branch>a').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+        /* fire event to open branch if the li contains a button instead of text */
+        tree.find('.branch>button').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+    }
+  });
+
+  /* Initialization of treeviews */
+
+  $('#tree1').treed();
+</script>
+
 
 </html>

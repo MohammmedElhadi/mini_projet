@@ -25,7 +25,7 @@ class UsersImport implements ToModel
                 'prenom'    => $row[1], 
                 'matricule'    => $row[2], 
                 'telephone'    => $row[3], 
-                'email'    => $row[0].$row[2].'@emp.dz',
+                'email'    => $row[0].".".$row[2].'@emp.dz',
                 'grade_id'    => $grade->id, 
                 'service_id'    => $service->id, 
                 'password' => Hash::make($row[2]),

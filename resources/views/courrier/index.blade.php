@@ -73,15 +73,17 @@
                 <button type="button" id="details" class="btn btn-default btn-sm" onclick="handleDetail('{{ $courrier }}' , '{{$courrier->classement->nom_class}}' ,
                         '{{$courrier->mention->nom_mention}}' , '{{$courrier->typecourrier->nom_typecourrier}}' , '{{$courrier->expditeur->nom}}' , '{{$courrier->expditeur->prenom}}' ,
                         '{{$courrier->expditeur->grade->abr_grade}}' ) ">
+
                   {{ __('Details ') }}
                 </button>
-                <a href="{{route('courrier.redirect',$courrier->id)}}" type="button" id="redirect" class="btn btn-success btn-sm" >redirect
+                <a href="{{route('courrier.redirect',$courrier->id)}}" type="button" id="redirect" class="btn btn-success btn-sm" ><i class="fa fa-paper-plane" aria-hidden="true">
                 </a>
               </td>
             </tr>
             @endforeach
           </tbody>
         </table>
+
       </div>
       <!-- /.card-body -->
 
@@ -389,6 +391,34 @@
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="send_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Supprimer un courrier')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id= "supprimer_form" action="" method="post">
+          @csrf
+          @method('DELETE')
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default " data-dismiss="modal">No</button>
+              <button type="submit" class="btn btn-danger ">Oui</button>
+          </div>
+      </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
 
 
 <script>
@@ -454,6 +484,12 @@
         form.action = "/courrier/"+id;
         $('#supprimer_modal').modal('show');
     }
+
+    function handlesend(id){
+        form = document.getElementById('supprimer_form')
+        form.action = "/courrier/"+id;
+        $('#send_modal').modal('show');
+}
 
 
     function handle( id ,courrier_id ){

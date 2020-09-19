@@ -27,7 +27,7 @@ class Service extends Model
     }
     public function chef_service()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User' , 'user_id');
     }
     public function users()
     {
