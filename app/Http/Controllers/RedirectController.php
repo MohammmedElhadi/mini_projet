@@ -37,7 +37,7 @@ class RedirectController extends Controller
         }
          if(!$courrier->getExp()->contains('id',Auth::user()->service->id))
              $courrier->services()->attach(Auth::user()->service->id , array('exp_dest'=>1));
-        dd($courrier->getDests());
+        //dd($courrier->getDests());
         session()->flash('success'  , 'Courrier redirigé avec succée');
         return redirect()->back();
         //notify les chefs services who have new courrier
