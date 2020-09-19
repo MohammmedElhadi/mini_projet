@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::middleware(['auth'])->group(function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('service', 'ServiceController');
@@ -51,8 +51,14 @@ Route::POST('piecejointe', 'PiecejointeController@store')->name('piecejointe.sto
 
 Route::POST('users/import','UserController@import')->name('users.import');
 
-Route::get('service-tree-view',['uses'=>'ServiceController@manageService']);
 
+Route::get('courrier/{id}/redirect','RedirectController@index')->name('courrier.redirect');
+
+Route::get('courrier/{id}/redirect/sous_services','RedirectController@get_sous_service');
+
+Route::post('courrier/{id}/redirect/sous_services/redirect','RedirectController@redirect')->name('courrier.redirect.go');
+
+  
 Route::get('backups', 'MyBackUpController@index')->name('backups.list');
 
 Route::get('backups/nouveau', 'MyBackUpController@nouveau_backup')->name('backup.nouveau');
@@ -60,3 +66,7 @@ Route::get('backups/nouveau', 'MyBackUpController@nouveau_backup')->name('backup
 Route::get('telecharger/{file}', 'MyBackUpController@telecharger')->name('backup.telecharger');
 
 Route::get('supprimer/{file}', 'MyBackUpController@supprimer')->name('backup.supprimer');
+});
+
+
+

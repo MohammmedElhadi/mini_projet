@@ -337,6 +337,9 @@
 
   })
 </script>
+
+@yield('js')
+
 <script >
   $.fn.extend({
 
@@ -394,5 +397,6 @@
 
   $('#tree1').treed();
 </script>
+
 
 </html>
