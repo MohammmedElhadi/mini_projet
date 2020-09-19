@@ -9,11 +9,11 @@ class Service extends Model
     public $guarded = [];
     public function courriers()
     {
-        return $this->belongsToMany('App\Courrier');
+        return $this->belongsToMany('App\Courrier')->withTimeStamps();
     }
     public function sous_service()
     {
-        return $this->hasMany('App\Service');
+        return $this->hasMany('App\Service','service_id');
     }
 
     public function service_pere()

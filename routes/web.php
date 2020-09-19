@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::middleware(['auth'])->group(function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('service', 'ServiceController');
@@ -46,3 +46,10 @@ Route::delete('piecejointes/{id}', 'PiecejointeController@destroy')->name('piece
 Route::POST('piecejointe', 'PiecejointeController@store')->name('piecejointe.store');
 
 Route::POST('users/import','UserController@import')->name('users.import');
+
+Route::get('courrier/{id}/redirect','RedirectController@index')->name('courrier.redirect');
+
+Route::get('courrier/{id}/redirect/sous_services','RedirectController@get_sous_service');
+
+Route::post('courrier/{id}/redirect/sous_services/redirect','RedirectController@redirect')->name('courrier.redirect.go');
+});

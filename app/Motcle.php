@@ -8,6 +8,6 @@ class Motcle extends Model
 {
     public function courriers()
     {
-        return $this->hasMany('App\Courrier');
+        return $this->belongsToMany('App\Courrier');
     }
 }

@@ -36,7 +36,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
+    
     public function service(){
         return $this->belongsTo('App\Service');
     }
@@ -49,6 +49,6 @@ class User extends Authenticatable
         return $this->HasMany('App\Courrier');
     }
     public function courriers_recu(){
-        return $this->blongsToMany('App\Courrier');
+        return $this->belongsToMany('App\Courrier','courrier_id');
     }
 }

@@ -86,6 +86,7 @@ class DatabaseSeeder extends Seeder
         Service::create([
             'nom_service' => 'service1',
             'abr_service' => 's1',
+            'nombre_sous_service'=> '2',
             'user_id' => '1'
             
         ]);
@@ -93,6 +94,7 @@ class DatabaseSeeder extends Seeder
             'nom_service' => 'service2',
             'abr_service' => 's2',
             'service_id'  =>'1',
+            'nombre_sous_service'=> '2',
             'user_id' => '1'
 
             ]);
@@ -100,6 +102,7 @@ class DatabaseSeeder extends Seeder
             'nom_service' => 'service3',
             'abr_service' => 's3',
             'service_id'  => '2',
+            'nombre_sous_service'=> '1',
             'user_id' => '2'
 
         ]);
@@ -107,6 +110,21 @@ class DatabaseSeeder extends Seeder
             'nom_service' => 'service4',
             'abr_service' => 's4',
             'service_id'  =>'1',
+            'user_id' => '1'
+            
+            ]);
+                Service::create([
+                    'nom_service' => 'service5',
+                    'abr_service' => 's5',
+                    'service_id'  => '3',
+                    'nombre_sous_service'=> '0',
+                    'user_id' => '2'
+        
+                ]);
+        Service::create([
+            'nom_service' => 'service6',
+            'abr_service' => 's6',
+            'service_id'  =>'5',
             'user_id' => '1'
 
         ]);

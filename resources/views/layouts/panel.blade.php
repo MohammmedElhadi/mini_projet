@@ -335,6 +335,6 @@
 
   })
 </script>
-
+@yield('js')
 
 </html>
