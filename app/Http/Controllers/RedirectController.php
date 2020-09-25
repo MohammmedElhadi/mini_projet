@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Courrier;
+use App\Notifications\NewCourrierNotification;
 use App\Service;
 class RedirectController extends Controller
 {
@@ -31,13 +32,17 @@ class RedirectController extends Controller
         //loop through  all services and attach them 
         
         //$courrier->services()->sync([Auth::user()->service->id,array_values($data)]);
-        foreach($data as $service){
-            if(!$courrier->getDests()->contains('id',$service))
-             $courrier->services()->attach($service ,array('exp_dest'=> 0));
-        }
-         if(!$courrier->getExp()->contains('id',Auth::user()->service->id))
+        $notification = New NewCourrierNotification($courrier);
+        if(!$courrier->getExp()->contains('id',Auth::user()->service->id))
              $courrier->services()->attach(Auth::user()->service->id , array('exp_dest'=>1));
-        dd($courrier->getDests());
+        foreach($data as $service){
+            if(!$courrier->getDests()->contains('id',$service)){
+                $courrier->services()->attach($service ,array('exp_dest'=> 0));
+                Service::find($service)->get_chef()->notify($notification);
+            }
+        }
+         
+        //dd($courrier->getDests());
         session()->flash('success'  , 'Courrier redirigé avec succée');
         return redirect()->back();
         //notify les chefs services who have new courrier

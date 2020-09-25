@@ -34,4 +34,10 @@ class Service extends Model
         return $this->hasMany('App\User');
     }
 
+
+
+    public function get_chef(){
+        return User::find($this->user_id);
+    }
+
 }

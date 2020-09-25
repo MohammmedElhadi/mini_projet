@@ -45,4 +45,13 @@ class Courrier extends Model
         $services  = $this->services()->where('exp_dest',1)->get();
         return $services;
     }
+
+    public function seen(){
+        
+        $services  = $this->services()->where('exp_dest',0)
+                                      ->Where('seen' , true)->get();
+        return $services;
+    }
+
+    
 }

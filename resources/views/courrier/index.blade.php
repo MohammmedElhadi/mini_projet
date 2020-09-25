@@ -43,7 +43,7 @@
             <tr>
               <td>{{ $courrier->objet_courrier }}</td>
               <td>{{ $courrier->expditeur->nom}}</td>
-              <td>@switch($courrier->etat_courrier)
+              <td >@switch($courrier->etat_courrier)
                 @case(0)
                 <span class="badge  badge-warning">{{__('en attente')}}</span>
                 @break
@@ -53,7 +53,7 @@
                 @break
 
                 @default
-                <span class="badge  badge-success">{{__('vu par')}}</span>
+                <span class="badge  badge-success" onclick="vu_par({{$courrier->seen()->toJson()}})">{{__('vu par')}}</span>
                 @endswitch
               </td>
               <td>{{ $courrier->classement->nom_class}}</td>
@@ -62,10 +62,12 @@
 
 
               <td>
-
+                @hasanyrole('chef_service|admin')
+                
                 <button type="button" id="editer" class="btn btn-info btn-sm" onclick="handleedit('{{ $courrier }}')">
-                  {{ __('Editer') }}
+                  {{ __('Modifier') }}
                 </button>
+                @endhasanyrole
                 <button type="button" id="supprimer" class="btn btn-danger btn-sm"
                   onclick="handledelete(' {{ $courrier->id }} ')">
                   {{ __('Supprimer ') }}
@@ -73,17 +75,15 @@
                 <button type="button" id="details" class="btn btn-default btn-sm" onclick="handleDetail('{{ $courrier }}' , '{{$courrier->classement->nom_class}}' ,
                         '{{$courrier->mention->nom_mention}}' , '{{$courrier->typecourrier->nom_typecourrier}}' , '{{$courrier->expditeur->nom}}' , '{{$courrier->expditeur->prenom}}' ,
                         '{{$courrier->expditeur->grade->abr_grade}}' ) ">
-
                   {{ __('Details ') }}
                 </button>
-                <a href="{{route('courrier.redirect',$courrier->id)}}" type="button" id="redirect" class="btn btn-success btn-sm" ><i class="fa fa-paper-plane" aria-hidden="true">
+                <a href="{{route('courrier.redirect',$courrier->id)}}" type="button" id="redirect" class="btn btn-success btn-sm" ><i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </a>
               </td>
             </tr>
             @endforeach
           </tbody>
         </table>
-
       </div>
       <!-- /.card-body -->
 
@@ -384,7 +384,7 @@
           </div>
         </form>
       </div>
-
+      
     </div>
     <!-- /.modal-content -->
   </div>
@@ -418,7 +418,23 @@
   <!-- /.modal-dialog -->
 </div>
 
-
+<div class="modal fade" id="vu_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{__('Vu par:')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="vu_list">
+        
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 
 
 <script>
@@ -614,6 +630,22 @@ function submit_pj(id){
   console.log(form.serialize())
   
  
+}
+
+
+function vu_par(data){
+  
+  //console.log(data)
+  for(i in data )
+   //console.log(data[i].nom_service)
+  var list = "";
+  for(i in data ){
+    list = list + "<li>" + data[i].nom_service + "</li>"
+  }
+  //console.log(list)
+
+  document.getElementById('vu_list').innerHTML = list
+   $('#vu_modal').modal('show');
 }
 </script>
 <!-- /.modal -->

@@ -120,7 +120,6 @@ class ServiceController extends Controller
         return $this->chef_service;
     }
 
-
     public function get_elements(){
         
         $html_text="";

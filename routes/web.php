@@ -58,11 +58,13 @@ Route::get('courrier/{id}/redirect/sous_services','RedirectController@get_sous_s
 
 Route::post('courrier/{id}/redirect/sous_services/redirect','RedirectController@redirect')->name('courrier.redirect.go');
 
+
   
 Route::get('backups', 'MyBackUpController@index')->name('backups.list');
 
 Route::get('backups/nouveau', 'MyBackUpController@nouveau_backup')->name('backup.nouveau');
     
+
 Route::get('telecharger/{file}', 'MyBackUpController@telecharger')->name('backup.telecharger');
 
 Route::get('supprimer/{file}', 'MyBackUpController@supprimer')->name('backup.supprimer');
