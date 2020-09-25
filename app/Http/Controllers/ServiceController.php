@@ -44,8 +44,10 @@ class ServiceController extends Controller
         $service = Service::create([
             'nom_service' => $request->nom_service,
             'abr_service' => $request->abr_service,
+
             'service_id'  => $request->service_id,
             'user_id'     =>$request->user_id
+
         ]);
         $user = User::find($request->user_id);
         $user->est_chef= true;
@@ -111,6 +113,7 @@ class ServiceController extends Controller
     {
         //
     }
+
 
 
     public function get_chef(){
