@@ -9,7 +9,7 @@
                 @endif    
                 value="{{$service->id}}">
                 <label  for="input{{$service->id}}" class="custom-control-label">{{$service->nom_service}}</label>
-                <span id = "span{{$service->id}}" onclick ="showSubService('{{$service->id}}')"><i class="fa fa-arrow-down" aria-hidden="true"></i></span>
+                @if($service->sous_service()->count() > 0) <span id = "span{{$service->id}}" onclick ="showSubService('{{$service->id}}')"><i class="fa fa-arrow-down" aria-hidden="true"></i></span>@endif
             </div>
         </div>
 

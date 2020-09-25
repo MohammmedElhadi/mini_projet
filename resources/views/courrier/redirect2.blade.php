@@ -5,6 +5,7 @@
 
 
     <!-- Main content -->
+    
     <section class="content">
         <div class="card">
             <div class="card-header">
@@ -15,7 +16,14 @@
                 <form action="{{route('courrier.redirect.go' , $courrier->id)}}" method="POST">
                     @csrf
                     <input type="hidden" name="courrier" value="{{$courrier->id}}">
+                    
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" name="all" id="all" >
+                        <label class="custom-control-label">Vers tous mes sous services</label>
+                     </div>
+
                     <ul>
+                     
                         @foreach (Auth::user()->service->sous_service as $service)
                         <li>
                             <div class="form-group">
@@ -23,15 +31,17 @@
                                     <input class="custom-control-input" name="{{$service->id}}" type="checkbox"
                                         id="input{{$service->id}}" value="{{$service->id}}"
                                         @if($courrier->getDests()->contains('id',$service->id))
-                                            checked
-                                        @endif
+                                    checked
+                                    @endif
                                     />
                                     <label for="input{{$service->id}}"
                                         class="custom-control-label">{{$service->nom_service}}
 
                                     </label>
+                                    @if($service->sous_service()->count() > 0)
                                     <span id="span{{$service->id}}" onclick="showSubService('{{$service->id}}')"><i
                                             class="fa fa-arrow-down" aria-hidden="true"></i></span>
+                                    @endif
 
                                 </div>
                             </div>

@@ -52,8 +52,32 @@
 
       
           <!-- Right navbar links -->
+         
+          
           <div class="navbar-nav ml-auto">
               <!-- SEARCH FORM -->
+              @hasanyrole('chef_service|element')
+              <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                  <
+                  <span class="badge badge-warning navbar-badge">nouveau courrier</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                  <span class="dropdown-item dropdown-header">{{Auth::user()->unreadNotifications()->count()}} Notifications</span>
+                  <div class="dropdown-divider"></div>
+                  @foreach (Auth::user()->unreadNotifications as $item)
+                  <a href="#" class="dropdown-item">
+                    <i class="fas fa-mail-bulk    "></i> {{$item->data['expediteur']}}
+                    {{-- <span class="float-right text-muted text-sm">2 days</span> --}}
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  @endforeach
+                 
+                  
+                  <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+              </li>
+              @endhasanyrole
               <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                   <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -64,7 +88,9 @@
                   </div>
                 </div>
               </form>
+              
           </div>
+          
         </nav>
         <!-- /.navbar -->
         @if(session()->has('success'))
@@ -124,6 +150,7 @@
                         <p>{{__('List des courriers')}}</p>
                       </a>
                     </li>
+                    @role('admin')
                     <li class="nav-item">
                       <a href="{{ route('typecourrier.index') }}" class="nav-link">
                         <i class="nav-icon far fa-circle"></i>
@@ -142,6 +169,7 @@
                         <p>{{__('Classements')}}</p>
                       </a>
                     </li>
+                    @endrole
                   </ul>
                 </li>
 
@@ -150,22 +178,25 @@
 
 
 
-
-                <li class="nav-item has-treeview">
-                <a href="{{ route('service.index') }}" class="nav-link">
-                    <i class="nav-icon fas fa-chart-pie"></i>
-                    <p>
-                      {{__('Service')}} 
-                     
-                    </p>
-                  </a>
-                </li>
-
+                
+                
+                @hasanyrole('admin|chef_service')
                 <li class="nav-item has-treeview">
                   <a href="{{ route('users.index') }}" class="nav-link">
-                      <i class="nav-icon fas fa-chart-pie"></i>
+                      <i class="fa fa-users" aria-hidden="true"></i>
                       <p>
                         {{__('Utilisateurs')}} 
+                       
+                      </p>
+                    </a>
+                  </li>
+                  @endhasanyrole
+                 @role('admin')
+                 <li class="nav-item has-treeview">
+                  <a href="{{ route('service.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-chart-pie"></i>
+                      <p>
+                        {{__('Service')}} 
                        
                       </p>
                     </a>
@@ -179,7 +210,7 @@
                       </p>
                     </a>
                   </li>
-
+                @endrole
                   <li class="nav-item has-treeview">
                     <a href="{{ route('password.reset',csrf_token()) }}" class="nav-link" >
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -8,6 +8,7 @@ use App\Mention;
 use App\typecourrier;
 use App\User;
 use App\Grade;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        factory('App\Courrier'::class,20)->create();
+
+        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'element']);
+        $role = Role::create(['name' => 'chef_service']);
 
 
         Typeservice::create([
@@ -54,68 +61,76 @@ class DatabaseSeeder extends Seeder
         Typecourrier::create([
             'nom_typecourrier' => 'typecourrier2'
         ]);
-        Service::create([
-            'nom_service' => 'service1',
-            'abr_service' => 's1',
-            'user_id' => '1',
-            'service_id' => 0
-            
-        ]);
-        Service::create([
-            'nom_service' => 'service2',
-            'abr_service' => 's2',
-            'user_id' => '2',
-            'service_id' => 1
-
-        ]);
-        Service::create([
-            'nom_service' => 'service3',
-            'abr_service' => 's3',
-            'user_id' => '2',
-            'service_id' => 1
-
-        ]);
-        Service::create([
-            'nom_service' => 'service4',
-            'abr_service' => 's4',
-            'user_id' => '3',
-            'service_id' => 3
-
-        ]);
+       
         User::create([
-            'nom' => 'ElHarachi',
-            'prenom' => 'Hamid',
+            'nom' => 'admin',
+            'prenom' => 'admin',
             'est_admin' => true,
             'matricule' => '201500099999',
-            'email' => 'hamid@gmail.com',
+            'email' => 'admin@admin.com',
             'telephone' => '0777999333',
             'password' => Hash::make('password'),
             'grade_id' => '1',
             'service_id' => '1',
+            ])->assignRole(['admin']);
             
             
-            ]);
+
+
         User::create([
-            'nom' => 'Philipe',
-            'prenom' => 'Mansour',
+            'nom' => 'element',
+            'prenom' => 'element',
             'matricule' => '201500099990',
-            'email' => 'Mansour@gmail.com',
+            'email' => 'element@element.com',
             'telephone' => '0777999330',
             'password' => Hash::make('password'),
             'grade_id' => '2',
             'service_id' => '2',
+            ])->assignRole(['element']);
             
-        ]);
+
+
+
+
+
+        //chef  services
         User::create([
-            'nom' => 'Dahman',
-            'prenom' => 'Redoune',
+            'nom' => 'chef ',
+            'prenom' => ' service 1',
             'matricule' => '201500099994',
-            'email' => 'redoune@gmail.com',
-            'telephone' => '0777999730',
+            'email' => 'chef1@chef1.com',
+            'telephone' => '0777999830',
             'password' => Hash::make('password'),
             'grade_id' => '1',
             'service_id' => '1',
-        ]);
+            'est_chef' => true
+        ])->assignRole(['chef_service']);  
+
+        User::create([
+            'nom' => 'chef',
+            'prenom' => 'service 2',
+            'matricule' => '201700099994',
+            'email' => 'chef2@chef2.com',
+            'telephone' => '0077999730',
+            'password' => Hash::make('password'),
+            'grade_id' => '1',
+            'service_id' => '2',
+            'est_chef' => true
+        ])->assignRole(['chef_service']);  
+
+        User::create([
+            'nom' => 'chef' ,
+            'prenom' => ' service 3',
+            'matricule' => '201800099994',
+            'email' => 'chef3@chef3.com',
+            'telephone' => '0777099730',
+            'password' => Hash::make('password'),
+            'grade_id' => '1',
+            'service_id' => '3',
+            'est_chef' => true
+        ])->assignRole(['chef_service']);  
+
+
         Grade::create([
             'nom_grade' => 'grade1',
             'abr_grade' => 'g1'
@@ -124,50 +139,28 @@ class DatabaseSeeder extends Seeder
             'nom_grade' => 'grade2',
             'abr_grade' => 'g2'
         ]);
+
         Service::create([
             'nom_service' => 'service1',
             'abr_service' => 's1',
-            'nombre_sous_service'=> '2',
-            'user_id' => '1'
+            'user_id' => '3'
             
         ]);
         Service::create([
             'nom_service' => 'service2',
             'abr_service' => 's2',
             'service_id'  =>'1',
-            'nombre_sous_service'=> '2',
-            'user_id' => '1'
+             'user_id' => '4'
 
             ]);
         Service::create([
             'nom_service' => 'service3',
             'abr_service' => 's3',
             'service_id'  => '2',
-            'nombre_sous_service'=> '1',
-            'user_id' => '2'
+            'user_id' => '5'
 
         ]);
-        Service::create([
-            'nom_service' => 'service4',
-            'abr_service' => 's4',
-            'service_id'  =>'1',
-            'user_id' => '1'
-            
-            ]);
-                Service::create([
-                    'nom_service' => 'service5',
-                    'abr_service' => 's5',
-                    'service_id'  => '3',
-                    'nombre_sous_service'=> '0',
-                    'user_id' => '2'
+         
         
-                ]);
-        Service::create([
-            'nom_service' => 'service6',
-            'abr_service' => 's6',
-            'service_id'  =>'5',
-            'user_id' => '1'
-
-        ]);
     }
 }
